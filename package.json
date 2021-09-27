@@ -1,0 +1,27 @@
+{
+  "name": "pi-dogs-main",
+  "version": "1.0.0",
+  "description": "<p align='left'>     <img src='https://static.wixstatic.com/media/85087f_0d84cbeaeb824fca8f7ff18d7c9eaafd~mv2.png/v1/fill/w_160,h_30,al_c,q_85,usm_0.66_1.00_0.01/Logo_completo_Color_1PNG.webp' </img> </p>",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "hstore": "0.0.1",
+    "pg": "^8.7.1",
+    "save": "^2.4.0",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucianaHer/PI-DOGS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucianaHer/PI-DOGS/issues"
+  },
+  "homepage": "https://github.com/LucianaHer/PI-DOGS#readme"
+}
