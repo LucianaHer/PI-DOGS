@@ -4,8 +4,8 @@ Your API key:
 39ac7f77-4301-423d-9bfa-1e49f281bed0
 
 UNICOS ENDPOINTS A USAR DE ESA API:
-GET https://api.thedogapi.com/v1/breeds
-GET https://api.thedogapi.com/v1/breeds/search?q={raza_perro}
+GET https://api.thedogapi.com/v1/breeds // trae todas las razas TODO
+GET https://api.thedogapi.com/v1/breeds/search?q={raza_perro}  TRAE UNA RAZA
 
 AGREGAR ESTO AL FINAL DE CADA ENDPOINT:
 ?api_key={YOUR_API_KEY}
