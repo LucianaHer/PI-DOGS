@@ -22,14 +22,14 @@ const getTempAPI = async () => {  // Fc para obtener todas los temperamentos de 
         var long= tempApi.length;
         
 
-        for(var i=0; i<long -1;i++){
+        for(var i=0; i<long ;i++){
             if(!tempApi[i]) continue;
             let spl= tempApi[i].split(',');   // un spl es un array de temperamentos de cada dog
             for(var j=0; j<spl.length; j++){
                 let tNorm=spl[j].trim().toLowerCase();
                 if(arrayTemp2.includes(tNorm)) continue; // para que no se repitan los temperamentos
                 arrayTemp2.push(tNorm);
-                arrayTemp.push({temp_name: tNorm})
+                arrayTemp.push({nameTemp: tNorm});
             }
         }
         return arrayTemp;
@@ -43,9 +43,11 @@ router.get('/', async (req,res)=> {
     
     try {
         const count= await Temperament.count();     //cuento si hay menos de 100 registros es xq aun no se trajeron los temps de la Api
+        console.log('HAY REGISTROS: ',count)
+        
         if (count < 100){
             const temperamentsApi = await getTempAPI();
-            await Temperament.bulkCreate(temperamentsApi); 
+            await Temperament.bulkCreate(temperamentsApi); //se llena la tabla con los temperamentos de la tabla
             
         }
     } catch (error) { res.status(404).send('error al crear datos')}
@@ -53,7 +55,7 @@ router.get('/', async (req,res)=> {
     try {
         
         const temperaments =  await Temperament.findAll()
-        const arrayDeTemps= temperaments.map(el => el.temp_name );
+        const arrayDeTemps= temperaments.map(el => el.nameTemp );
         res.json(arrayDeTemps);    //devuelve un array de strings (temperamentos)
     } catch (e) {
         return('No se pudo acceder a la BD',e)        

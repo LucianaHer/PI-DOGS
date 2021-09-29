@@ -79,6 +79,47 @@ const getAllData = async () => {
 }
 
 ////////////RUTAS////////////////////////
+/* {
+    "nombre": "Coker",
+    "altura": "40",
+    "peso": "18",
+    "años": "11"
+
+} */
+
+router.post('/', async (req,res) =>{
+    const { nombre, altura, peso, años, temperaments}= req.body;
+    
+    if (!nombre || !altura || !peso){
+        return res.send('faltan datos ')
+    }
+    try{
+        const[dog, created]= await Dog.findOrCreate({
+            where:{
+              name: nombre,
+            },
+            defaults:{
+                height: altura,
+                weight: peso,
+                life_span: años      
+            }   
+        });
+        var tempe;
+        if ( created===true && temperaments!==undefined){
+            //temperaments.map
+            tempe = await Temperament.create({nameTemp: temperaments})
+            
+            await dog.addTemperaments(tempe); //vincula el perro con el temperamento
+            await tempe.addDogs(dog); //vincula el temperamento con el perro 
+        }
+        
+        res.json(dog);
+    }
+    catch(e){ 
+        res.status(404).send('No creado')
+    };
+});
+
 
 router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
     const {name}= req.query;   // nombre de la raza por query!!!

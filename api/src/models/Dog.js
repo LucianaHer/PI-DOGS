@@ -29,12 +29,12 @@ module.exports = (sequelize) => {
         min: 10,          // altura min
         max: 100,         //altura max
       },
-      set(value){   // seteo q se guarde como un string de rango entre el valor-2, un -, y el valor +2
-        let min= value-2;
-        let max = number(value)+2;
-        let heigt_range= min + ' - ' + max;
-        this.setDataValue('height',  heigt_range);
-      },
+      // set(value){   // seteo q se guarde como un string de rango entre el valor-2, un -, y el valor +2
+      //   let min= value-2;
+      //   let max = number(value)+2;
+      //   let heigt_range= min.toString() + ' - ' + max.toString();
+      //   this.setDataValue('height',  heigt_range);
+      // },
     },
 
     weight: {
@@ -42,9 +42,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       validate: {
         isNumeric: true,
-        len: [1,2],
-        min: 1,
-        max: 100,
+        len: [1,2]
       },
     },
     
