@@ -4,9 +4,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
 
-// const dogs = require('./routes/dogs');        ////////
-// const temperament =require ('./routes/temperament')/////////
-// const dog= require ('./routes/dog') /////////////
+
 
 require('./db.js');
 
@@ -27,10 +25,6 @@ server.use((req, res, next) => {
 });
 
 server.use('/', routes);
-
-// server.use('/dogs', dogs);//////
-// server.use('/dog', dog)
-// server.use('/temperament', temperament);///////
 
 
 

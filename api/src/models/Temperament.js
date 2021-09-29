@@ -5,11 +5,11 @@ module.exports = (sequelize) => {
     sequelize.define('Temperament', {
         temp_name: {
             type: DataTypes.STRING,
-            allowNull: false.valueOf,
+            allowNull: false,
             unique: true,
             validate:{
                 isAlpha: true
-            }
+            } 
         }
     },
     {
