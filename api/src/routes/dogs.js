@@ -39,7 +39,10 @@ const getDBInfo = async () => {     // fc para obtener todos las razas de la B D
         const dogsDB =  await Dog.findAll({
             include: Temperament
         });
-        return dogsDB;    
+       // console.log('DBINFO', dogsDB)
+        const dbDatos=dogsDB.map(d => d.dataValues);
+        //console.log('DBINFO2', dbDatos)
+        return dbDatos;    //(obtener solo el DataValue de cada obj de dogsDB(desde el front?) )
     } catch (e) {
         return('No se pudo acceder a la BD',e)        
     }
@@ -49,7 +52,9 @@ const getAllData = async () => {
     try {
         const apiInfo= await getInfoAPI();
         const dbInfo= await getDBInfo();
-        const allInfo= apiInfo.concat(dbInfo);
+        console.log('info de la bd dog:', dbInfo)
+        const allInfo= dbInfo.concat(apiInfo);
+        //console.log("JUNTO BD CON API: ", allInfo)
         return allInfo;
         
     } catch (e) {
@@ -65,6 +70,7 @@ const getAllData = async () => {
     for(var i=0; i< allDogs.length; i++){
         if (allDogs[i].id === Number(idRaza)){
             let dog={
+                id: allDogs[i].id,
                 name: allDogs[i].name,
                 temperament: allDogs[i].temperament,
                 image: allDogs[i].image,
@@ -78,6 +84,15 @@ const getAllData = async () => {
 
 }
 
+async function addTemperaments(t, d){    // agrega los temperamentos pasados en el array, al crear un dog
+    var [temp, creado]= await Temperament.findOrCreate({
+        where: {nameTemp: t}
+    })
+    await d.addTemperaments(temp); //vincula el perro con el temperamento
+    await temp.addDogs(d); //vincula el temperamento con el perro 
+       
+}
+
 ////////////RUTAS////////////////////////
 /* {
     "nombre": "Coker",
@@ -88,7 +103,7 @@ const getAllData = async () => {
 } */
 
 router.post('/', async (req,res) =>{
-    const { nombre, altura, peso, años, temperaments}= req.body;
+    const {nombre, altura, peso, años, temperaments}= req.body; //!! temperaments es un array
     
     if (!nombre || !altura || !peso){
         return res.send('faltan datos ')
@@ -104,15 +119,11 @@ router.post('/', async (req,res) =>{
                 life_span: años      
             }   
         });
-        var tempe;
         if ( created===true && temperaments!==undefined){
-            //temperaments.map
-            tempe = await Temperament.create({nameTemp: temperaments})
-            
-            await dog.addTemperaments(tempe); //vincula el perro con el temperamento
-            await tempe.addDogs(dog); //vincula el temperamento con el perro 
+            temperaments.forEach( te => {
+            addTemperaments(te, dog);
+            })   
         }
-        
         res.json(dog);
     }
     catch(e){ 
@@ -127,15 +138,27 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
     const allData= await getAllData();   
 
     const dataPpal = await allData.map(el => {  // para devolver solo la info de la ruta ppal
-        return {
-            name: el.name,
-            temperament: el.temperament,
-            image: el.image
+
+        if(el.hasOwnProperty('createInDb')){
+            let tp= el.Temperaments.map( t => t.nameTemp);
+            return {
+                name: el.name,
+                temperament: tp.join(', '),
+                image: "No existe imágen"
+            }
+        }else{
+            return {    
+    
+                name: el.name,
+                temperament: el.temperament,
+                image: el.image
+            }
         }
     });
-    
     if(name){  // si hay query
+        //console.log("entro acccaaaaaaaaa", name);
         let dogNames = await dataPpal.filter (el => el.name.toLowerCase().includes(name.toLowerCase()));
+        
         if(dogNames.length >0){
             res.json(dogNames);
         }
@@ -143,9 +166,11 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
             res.status(404).send('No existe ninguna raza que incluya ese nombre')
         }    
     } else{  //si no hay query
+        console.log('PERRRO -ID:',dataPpal[0].id)
         res.json(dataPpal);
 
     }  
+    
 })
 
 router.get('/:idRaza', async (req,res)=> {  // ruta para encontrar una raza en particular (el front me manda la id), 
@@ -154,6 +179,7 @@ router.get('/:idRaza', async (req,res)=> {  // ruta para encontrar una raza en p
     
     try {
         var oneDog= await getOneDogById(idRaza);
+        console.log(oneDog)
         if (oneDog){
             res.json(oneDog);
         }else {

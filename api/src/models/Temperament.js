@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
-            validate:{
+            validate:{          //ojo!! no admite acentos
                 isAlpha: true
             } 
         }
