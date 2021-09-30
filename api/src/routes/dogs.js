@@ -72,13 +72,13 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
         let dogNames = await dataPpal.filter (el => el.name.toLowerCase().includes(name.toLowerCase()));
         
         if(dogNames.length >0){
-            res.json(dogNames);  //es un arary de las coincidencias
+            res.status(200).json(dogNames);  //es un arary de las coincidencias
         }
         else {
             res.status(404).send('No existe ninguna raza que incluya ese nombre')
         }    
     } else{  //si no hay query
-        res.json(dataPpal);
+        res.status(200).json(dataPpal);
     }  
 })
 
@@ -93,14 +93,14 @@ router.get('/:idRaza', async (req,res)=> {  // ruta para encontrar una raza en p
 
             var oneDogBD= await getOneByIdBD(idRaza);  // fc q busca en la BD un dog x id 
             if(oneDogBD){
-                res.json(oneDogBD);
+                res.status(200).json(oneDogBD);
             }else{
                 res.send('Raza no encontrada')
             }
         }else{   // busca en la Api
             var oneDog= await getOneByIdAPI(idRaza); //fc que busca un dog en la Api x id
             if (oneDog){
-                res.json(oneDog);
+                res.status(200).json(oneDog);
             }else{
                 res.send('Raza no encontrada')
             }
