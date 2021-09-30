@@ -98,7 +98,7 @@ router.get('/:idRaza', async (req,res)=> {  // ruta para encontrar una raza en p
                 res.send('Raza no encontrada')
             }
         }else{   // busca en la Api
-            var oneDog= await getOneByIdAPI(idRaza); //func que busca un dog en la Api x id
+            var oneDog= await getOneByIdAPI(idRaza); //fc que busca un dog en la Api x id
             if (oneDog){
                 res.status(200).json(oneDog);
             }else{
