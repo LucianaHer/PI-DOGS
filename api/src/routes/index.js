@@ -17,8 +17,6 @@ router.use('/dogs', dogs);//////
 
 router.use('/temperament', temperament);///////
 
-//router.use('/dog', dog); /////
-
 
 
 

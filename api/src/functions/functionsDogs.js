@@ -1,9 +1,14 @@
+const axios = require ('axios'); /////
+const {
+    YOUR_API_KEY
+  } = process.env;
+  
+const { Dog, Temperament } = require('../db');  // me traigo los modelos
 
-
+//FUNCIONES QUE UTILIZA LA RUTA /Dogs
 
 const getInfoAPI = async () => {  // Fc para obtener todas las razas de la API
     try {
-        
         const urlApi= await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${YOUR_API_KEY}`);
         
         const infoApi = urlApi.data.map(el => {
@@ -14,8 +19,8 @@ const getInfoAPI = async () => {  // Fc para obtener todas las razas de la API
                 image: el.image.url,
                 vida: el.life_span,
                 temperament: el.temperament,
-                peso: el.weight.metric,
-                origen: el.origin
+                peso: el.weight.metric
+                //origen: el.origin
             }
         })
         return infoApi;
@@ -31,9 +36,8 @@ const getDBInfo = async () => {     // fc para obtener todos las razas de la B D
             include: Temperament
         });
         
-        const dbDatos=dogsDB.map(d => d.dataValues);
-        console.log('DBINFO2', dbDatos)
-        return dbDatos;    //(obtener solo el DataValue de cada obj de dogsDB(desde el front?) )
+        const dbDatos=dogsDB.map(d => d.dataValues);//(obtener solo el DataValue de cada obj de dogsDB)
+        return dbDatos;    
     } catch (e) {
         return('No se pudo acceder a la BD',e)        
     }
@@ -43,23 +47,20 @@ const getAllData = async () => {
     try {
         const apiInfo= await getInfoAPI();
         const dbInfo= await getDBInfo();
-        //console.log('info de la bd dog:', dbInfo)
         const allInfo= dbInfo.concat(apiInfo);
-        //console.log("JUNTO BD CON API: ", allInfo)
         return allInfo;
-        
     } catch (e) {
         return ('error en la obtencion de datos',e)
     }
 }
 
- async function getOneByIdAPI(idRaza){   // funcion que busca una raza x id en la Api
+const getOneByIdAPI = async function(idRaza){  // funcion que busca una raza x id en la Api
 
-    //var allDogs= await getAllData();
     var allDogs= await getInfoAPI();
 
+
     for(var i=0; i< allDogs.length; i++){
-        if (allDogs[i].id === Number(idRaza)){
+        if (allDogs[i].id === Number(idRaza)){ //opcional setear aca lo q devuelvo
             // let dog={
             //     id: allDogs[i].id,
             //     name: allDogs[i].name,
@@ -75,21 +76,39 @@ const getAllData = async () => {
             return allDogs[i]
         }
     }        
-
-
-}async function getOneByIdBD(idRaza){   // Para encontrar un dog en la BD
-    var oneDogBD= await Dog.findByPk(idRaza, {
-        include: Temperament
-    }); 
-    //var dbDog=dogsDB.map(d => d.dataValues);
-    //console.log("Data del perro:", oneDogBD)
-    //console.log("Data del perro:", oneDogBD.dataValues)
-    return oneDogBD.dataValues;
 }
 
 
+const getOneByIdBD = async function(idRaza){// Para encontrar un dog en la BD x id UUIV
 
-async function addTemperaments(t, d){    // agrega los temperamentos pasados en el array, al crear un dog
+    try {
+        var oneDogBD= await Dog.findByPk(idRaza, {
+            include: Temperament
+        }); 
+        if(oneDogBD){
+    
+            var tp= oneDogBD.Temperaments.map( t => t.dataValues.nameTemp);//guerda los temps asociados en un array(tp)
+            
+            var dogDetail= {  //seteo un objeto ppara devolver los datos listos
+                name: oneDogBD.name,
+                image: "No existe imágen",
+                altura: oneDogBD.height,
+                peso: oneDogBD.weight,
+                vida: oneDogBD.life_span,
+                temperament: tp.join(', ')//al array tp , lo muestra como string
+            } 
+            
+            return dogDetail;  
+        }
+    } catch (error) {
+        return null;
+    }
+    
+}
+
+
+const addTemperaments = async function(t,d){// agrega los temperamentos pasados en el array, al crear un dog
+//async function addTemperaments(t, d){    // agrega los temperamentos pasados en el array, al crear un dog
     t=capitalizar(t);
     var [temp, creado]= await Temperament.findOrCreate({
         where: {nameTemp: t}
@@ -99,9 +118,20 @@ async function addTemperaments(t, d){    // agrega los temperamentos pasados en 
     
 }
 
-
-function capitalizar(str) {
+const capitalizar = function(str){    // capitaliza un string
+//function capitalizar(str) {
         return str.replace(/\w\S*/g, function(txt){
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         });
-    }
+}
+
+
+module.exports = {
+    getInfoAPI,
+    getDBInfo,
+    getAllData,
+    getOneByIdAPI,
+    getOneByIdBD,
+    addTemperaments,
+    capitalizar
+}
