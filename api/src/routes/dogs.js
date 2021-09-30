@@ -91,7 +91,7 @@ router.get('/:idRaza', async (req,res)=> {  // ruta para encontrar una raza en p
     try {
         if(idRaza.length===36){  // es por que es una id de UUID => de mi bd
 
-            var oneDogBD= await getOneByIdBD(idRaza);  // fc q busca en la BD un dog x id 
+            var oneDogBD= await getOneByIdBD(idRaza);  // fc. q busca en la BD un dog x id 
             if(oneDogBD){
                 res.status(200).json(oneDogBD);
             }else{
