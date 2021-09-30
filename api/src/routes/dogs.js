@@ -39,9 +39,9 @@ const getDBInfo = async () => {     // fc para obtener todos las razas de la B D
         const dogsDB =  await Dog.findAll({
             include: Temperament
         });
-       // console.log('DBINFO', dogsDB)
+        
         const dbDatos=dogsDB.map(d => d.dataValues);
-        //console.log('DBINFO2', dbDatos)
+        console.log('DBINFO2', dbDatos)
         return dbDatos;    //(obtener solo el DataValue de cada obj de dogsDB(desde el front?) )
     } catch (e) {
         return('No se pudo acceder a la BD',e)        
@@ -52,7 +52,7 @@ const getAllData = async () => {
     try {
         const apiInfo= await getInfoAPI();
         const dbInfo= await getDBInfo();
-        console.log('info de la bd dog:', dbInfo)
+        //console.log('info de la bd dog:', dbInfo)
         const allInfo= dbInfo.concat(apiInfo);
         //console.log("JUNTO BD CON API: ", allInfo)
         return allInfo;
@@ -62,23 +62,27 @@ const getAllData = async () => {
     }
 }
 
- async function getOneDogById(idRaza){   // funcion que busca una raza x id
+ async function getOneDogById(idRaza){   // funcion que busca una raza x id en la Api
 
-    var oneDog={};
-    var allDogs= await getAllData();
     
+    //var allDogs= await getAllData();
+    var allDogs= await getInfoAPI();
+
     for(var i=0; i< allDogs.length; i++){
         if (allDogs[i].id === Number(idRaza)){
-            let dog={
-                id: allDogs[i].id,
-                name: allDogs[i].name,
-                temperament: allDogs[i].temperament,
-                image: allDogs[i].image,
-                altura: allDogs[i].altura,
-                peso: allDogs[i].peso,
-                vida: allDogs[i].vida
-            }
-            return dog;
+            // let dog={
+            //     id: allDogs[i].id,
+            //     name: allDogs[i].name,
+            //     temperament: allDogs[i].temperament,
+            //     image: allDogs[i].image,
+            //     altura: allDogs[i].altura,
+            //     peso: allDogs[i].peso,
+            //     vida: allDogs[i].vida
+
+                
+            // }
+            // return dog;
+            return allDogs[i]
         }
     }        
 
@@ -166,7 +170,7 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
             res.status(404).send('No existe ninguna raza que incluya ese nombre')
         }    
     } else{  //si no hay query
-        console.log('PERRRO -ID:',dataPpal[0].id)
+        //console.log('PERRRO -ID:',dataPpal[0].id)
         res.json(dataPpal);
 
     }  
@@ -175,16 +179,29 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
 
 router.get('/:idRaza', async (req,res)=> {  // ruta para encontrar una raza en particular (el front me manda la id), 
                                             //pero en la Api se puede buscar x nombre(no voy a usar esa busqueda)
-    const {idRaza}=req.params;
+    var {idRaza}=req.params;
+    console.log("Params: ", idRaza, typeof(idRaza), idRaza.length )
+    //idRaza=Number(idRaza);
     
     try {
-        var oneDog= await getOneDogById(idRaza);
-        console.log(oneDog)
-        if (oneDog){
-            res.json(oneDog);
-        }else {
-            res.send('Raza no encontrada')
-        }      
+        if(idRaza.length===36){  // es por que es una id de UUID => de mi bd
+
+            var oneDogBD= await Dog.findByPk(idRaza);// busca en la BD
+            console.log('OBJ DE LA bd: ', oneDogBD)
+            if(oneDogBD){
+                res.json(oneDogBD)
+            }else{
+                res.send('Raza no encontrada')
+            }
+        }else{   // busca en la Api
+            var oneDog= await getOneDogById(idRaza);
+            console.log(oneDog)
+            if (oneDog){
+                res.json(oneDog);
+            }else{
+                res.send('Raza no encontrada')
+            }
+        }    
     } catch (e) {
         res.status(404).send('No se pudo acceder a los datos')
     }
