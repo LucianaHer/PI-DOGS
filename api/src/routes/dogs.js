@@ -8,7 +8,7 @@ const {
   
 const { Dog, Temperament } = require('../db');  // me traigo los modelos
 
-///////FUNCIONES////////////////////////////
+/////FUNCIONES////////////////////////////
 const getInfoAPI = async () => {  // Fc para obtener todas las razas de la API
     try {
         
@@ -34,8 +34,7 @@ const getInfoAPI = async () => {  // Fc para obtener todas las razas de la API
 }
 
 const getDBInfo = async () => {     // fc para obtener todos las razas de la B Datos, junto con los temperamentos
-    try {
-        
+    try {      
         const dogsDB =  await Dog.findAll({
             include: Temperament
         });
@@ -62,9 +61,8 @@ const getAllData = async () => {
     }
 }
 
- async function getOneDogById(idRaza){   // funcion que busca una raza x id en la Api
+ async function getOneByIdAPI(idRaza){   // funcion que busca una raza x id en la Api
 
-    
     //var allDogs= await getAllData();
     var allDogs= await getInfoAPI();
 
@@ -86,14 +84,31 @@ const getAllData = async () => {
         }
     }        
 
+}async function getOneByIdBD(idRaza){   // Para encontrar un dog en la BD
+    var oneDogBD= await Dog.findByPk(idRaza, {
+        include: Temperament
+    }); 
+    //var dbDog=dogsDB.map(d => d.dataValues);
+    //console.log("Data del perro:", oneDogBD)
+    //console.log("Data del perro:", oneDogBD.dataValues)
+    return oneDogBD.dataValues;
 }
 
+function capitalizar(str) {
+    return str.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
+
+
 async function addTemperaments(t, d){    // agrega los temperamentos pasados en el array, al crear un dog
+    t=capitalizar(t);
     var [temp, creado]= await Temperament.findOrCreate({
         where: {nameTemp: t}
     })
     await d.addTemperaments(temp); //vincula el perro con el temperamento
-    await temp.addDogs(d); //vincula el temperamento con el perro 
+    //await temp.addDogs(d); //vincula el temperamento con el perro 
        
 }
 
@@ -107,11 +122,13 @@ async function addTemperaments(t, d){    // agrega los temperamentos pasados en 
 } */
 
 router.post('/', async (req,res) =>{
-    const {nombre, altura, peso, años, temperaments}= req.body; //!! temperaments es un array
+    var {nombre, altura, peso, años, temperaments}= req.body; //!! temperaments es un array
     
     if (!nombre || !altura || !peso){
         return res.send('faltan datos ')
     }
+    nombre=capitalizar(nombre);
+
     try{
         const[dog, created]= await Dog.findOrCreate({
             where:{
@@ -125,7 +142,8 @@ router.post('/', async (req,res) =>{
         });
         if ( created===true && temperaments!==undefined){
             temperaments.forEach( te => {
-            addTemperaments(te, dog);
+                //te.toLowerCase();
+                addTemperaments(te, dog);
             })   
         }
         res.json(dog);
@@ -160,7 +178,6 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
         }
     });
     if(name){  // si hay query
-        //console.log("entro acccaaaaaaaaa", name);
         let dogNames = await dataPpal.filter (el => el.name.toLowerCase().includes(name.toLowerCase()));
         
         if(dogNames.length >0){
@@ -180,21 +197,49 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
 router.get('/:idRaza', async (req,res)=> {  // ruta para encontrar una raza en particular (el front me manda la id), 
                                             //pero en la Api se puede buscar x nombre(no voy a usar esa busqueda)
     var {idRaza}=req.params;
-    console.log("Params: ", idRaza, typeof(idRaza), idRaza.length )
-    //idRaza=Number(idRaza);
-    
+     
+    // Los campos mostrados en la ruta principal para cada raza (imagen, nombre y temperamento)
+    // Imagen
+    // Nombre
+    // Temperamento
+    //-----------------
+    //     Altura
+    //     Peso
+    //     Años de vida
+
+
     try {
         if(idRaza.length===36){  // es por que es una id de UUID => de mi bd
 
-            var oneDogBD= await Dog.findByPk(idRaza);// busca en la BD
-            console.log('OBJ DE LA bd: ', oneDogBD)
+            var oneDogBD= await getOneByIdBD(idRaza);
+
+            //var oneDogBD= await Dog.findByPk(idRaza);// busca en la BD
+            //console.log('OBJ DE LA bd: ', oneDogBD)
+            console.log("TEMPERAMENTOS: ",oneDogBD.Temperaments[0].dataValues.nameTemp)
             if(oneDogBD){
-                res.json(oneDogBD)
+                var tp= oneDogBD.Temperaments.map( t => t.dataValues.nameTemp);
+
+                //let tp= oneDogBD.Temperaments.map( t => t.nameTemp);
+
+
+                console.log("ARRAY DE TEMPERS: ",tp);
+                var dogDetail= {
+                    name: oneDogBD.name,
+                    image: "No existe imágen",
+                    altura: oneDogBD.height,
+                    peso: oneDogBD.weight,
+                    vida: oneDogBD.life_span,
+                    temperament: tp.join(', ')//al array tp , lo convierto en string
+                }
+                
+                res.json(dogDetail);
+
             }else{
                 res.send('Raza no encontrada')
             }
         }else{   // busca en la Api
-            var oneDog= await getOneDogById(idRaza);
+            var oneDog= await getOneByIdAPI(idRaza);
+
             console.log(oneDog)
             if (oneDog){
                 res.json(oneDog);

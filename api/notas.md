@@ -98,9 +98,9 @@ AGREGAR ESTO AL FINAL DE CADA ENDPOINT:
     - Ruta de creación de raza de perro:
         . Un formulario controlado con los siguientes campos:
             Nombre
-            Altura (Diferenciar entre altura mínima y máxima)
-            Peso (Diferenciar entre peso mínimo y máximo)
-            Años de vida
+            Altura (Diferenciar entre altura mínima y máxima) !!!ENVIAR AL BACK COMO STRING
+            Peso (Diferenciar entre peso mínimo y máximo)      !!!ENVIAR AL BACK COMO STRING
+            Años de vida                                       !!tb filtrar rango en el front
 
         . Posibilidad de seleccionar/agregar uno o más temperamentos
         . Botón/Opción para crear una nueva raza de perro

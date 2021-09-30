@@ -15,20 +15,20 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate:{
-        isAlpha: true,  //solo admite letras
-      }
+      // validate:{
+      //   isAlpha: true,  //solo admite letras
+      // }
     },
 
     height: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        isNumeric: true,  // que solo se pueda ingresar números
-        len: [1,3],       // que tenga un length entre 1 y 3
-        min: 10,          // altura min
-        max: 100,         //altura max
-      },
+      // validate: {
+      //   isNumeric: true,  // que solo se pueda ingresar números
+      //   len: [1,3],       // que tenga un length entre 1 y 3
+      //   min: 10,          // altura min
+      //   max: 100,         //altura max
+      // },
       // set(value){   // seteo q se guarde como un string de rango entre el valor-2, un -, y el valor +2
       //   let min= value-2;
       //   let max = number(value)+2;
@@ -40,21 +40,21 @@ module.exports = (sequelize) => {
     weight: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        isNumeric: true,
-        len: [1,2]
-      },
+      // validate: {
+      //   isNumeric: true,
+      //   len: [1,2]
+      // },
     },
     
     life_span: {
       type: DataTypes.STRING,
-      validate:{
-        isNumeric: true,
-        len: [1,2],
-        max: 20,
-      },
+      // validate:{
+      //   isNumeric: true,
+      //   len: [1,2],
+      //   max: 20,
+      // },
       get(){
-        return this.getDataValue('life_span') + ' years';
+        return this.getDataValue('life_span') + ' años';
       }
     },
 
