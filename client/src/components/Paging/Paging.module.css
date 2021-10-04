@@ -1,0 +1,28 @@
+.ul{
+   list-style-type: none;
+   text-align: center;
+}
+
+.li{
+   display: inline;
+   text-align: center;
+   margin: 0 10px 0 0;
+   color: #666;
+   background-color: #eeeeee;
+   border: 1px solid rgb(182, 73, 73);
+   cursor: zoom-in
+}
+
+.a{
+    padding: 2px 7px 2px 7px;
+   color: #666;
+   background-color: #eeeeee;
+   border: 1px solid rgb(182, 73, 73);
+   text-decoration: none;
+   
+}
+
+.li:hover {
+    background: #FCDEC0;
+    text-decoration: none;
+  }
