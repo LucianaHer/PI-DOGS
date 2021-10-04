@@ -62,6 +62,7 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
             }
         }else{//es de la Api
             return {    
+                id: el.id,
                 name: el.name,
                 temperament: el.temperament,
                 image: el.image
