@@ -5,8 +5,8 @@ import Styles from "./Paging.module.css"
 export default function Paging({ dogsPorPag, allDogs, paginado }) {
   const pageNumbers = [];
 
-  for (let i = 0; i <= Math.ceil(allDogs / dogsPorPag); i++) {
-    pageNumbers.push(i+1); // tiene la cant de paginas que necesito mapear
+  for (let i = 1; i <= Math.ceil(allDogs / dogsPorPag); i++) {
+    pageNumbers.push(i); // tiene la cant de paginas que necesito mapear
   
   }
   return (
