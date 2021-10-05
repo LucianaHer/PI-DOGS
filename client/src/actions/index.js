@@ -11,7 +11,7 @@ export function getDogs(){
     }
 }
 
-export function getTemperaments(){
+export function getTemperaments(){ //CONECTA CON EL BAK (get/temperaments)
     return async function (dispatch){
         var json= await axios.get("http://localhost:3001/temperament");
         return dispatch({
@@ -28,4 +28,21 @@ export function filterByTemperament(payload){ // el payload es el value del sele
         payload
     }
 
+}
+
+
+export function filterByCreated(payload){ // payload es el value del select
+    return{
+        type: "FILTER-BY-CREATED",
+        payload
+    }
+
+}
+
+
+export function orderByName(payload) {  // payload es el value de este select(asc/desc)
+    return{
+        type: "ORDER-BY-NAME",
+        payload
+    }
 }

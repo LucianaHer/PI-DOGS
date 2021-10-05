@@ -26,7 +26,7 @@ const getTempAPI = async () => {  // Fc para obtener todas los temperamentos de 
             if(!tempApi[i]) continue;
             let spl= tempApi[i].split(',');   // un spl es un array de temperamentos de cada dog
             for(var j=0; j<spl.length; j++){
-                let tNorm=spl[j].trim().toLowerCase();
+                let tNorm=spl[j].trim();//.toLowerCase();
                 if(arrayTemp2.includes(tNorm)) continue; // para que no se repitan los temperamentos
                 arrayTemp2.push(tNorm);
                 arrayTemp.push({nameTemp: tNorm});
@@ -54,7 +54,9 @@ router.get('/', async (req,res)=> {
 
     try {
         
-        const temperaments =  await Temperament.findAll()
+        const temperaments =  await Temperament.findAll({
+            order: [['nameTemp', 'ASC'],]
+        })
         //const arrayDeTemps= temperaments.map(el => {el.nameTemp, el.id} );
         res.json(temperaments);    //devuelve un array de strings (temperamentos)
     } catch (e) {
