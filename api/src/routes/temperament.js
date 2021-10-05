@@ -55,8 +55,8 @@ router.get('/', async (req,res)=> {
     try {
         
         const temperaments =  await Temperament.findAll()
-        const arrayDeTemps= temperaments.map(el => el.nameTemp );
-        res.json(arrayDeTemps);    //devuelve un array de strings (temperamentos)
+        //const arrayDeTemps= temperaments.map(el => {el.nameTemp, el.id} );
+        res.json(temperaments);    //devuelve un array de strings (temperamentos)
     } catch (e) {
         return('No se pudo acceder a la BD',e)        
     }

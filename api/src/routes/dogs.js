@@ -61,10 +61,11 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
                 image: "No existe imágen"
             }
         }else{//es de la Api
+            //let tpApi= el.temperament.split(',');//convierte el string temperament en un array
             return {    
                 id: el.id,
                 name: el.name,
-                temperament: el.temperament,
+                temperament: el.temperament, ///modifique desde .split!!! 
                 image: el.image
             }
         }
