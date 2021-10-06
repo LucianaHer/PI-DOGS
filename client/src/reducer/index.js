@@ -19,6 +19,15 @@ function rootReducer(state = initialState, action) {
         temps: action.payload,
       };
 
+
+    case "GET-NAME-DOGS":
+      console.log("CONTROL DE QUERY: ",action.payload)
+      return {
+        ...state,
+        dogs: action.payload
+      }
+
+
     case "FILTER-BY-TEMP":
       var dogsF = state.allDogs; // siempre me traigo todos los dogs del estado inmutable
       var tempFilter = [];
@@ -97,32 +106,33 @@ function rootReducer(state = initialState, action) {
 
       for (let i = 0; i < dogsW.length; i++) {
         var peso = dogsW[i].weight.split("-"); //array
-        if( peso[0] && peso[1] && peso[0].trim()==='NaN') peso[0]=peso[1];
-        if(peso[1] && peso[0] && peso[1].trim()==='NaN') peso[1]= peso[0];
-  
-        if (dogsW[i].weight === "NaN" ) { //p/setar el pmnin
+        if (peso[0] && peso[1] && peso[0].trim() === "NaN") peso[0] = peso[1];
+        if (peso[1] && peso[0] && peso[1].trim() === "NaN") peso[1] = peso[0];
+
+        if (dogsW[i].weight === "NaN") {
+          //p/setar el pmnin
           dogsW[i].pmin = 100;
         } else {
           dogsW[i].pmin = parseInt(peso[0].trim());
         }
-        
-        if(peso.length >1){ //p/setear el pmax
-            dogsW[i].pmax=parseInt(peso[1].trim());
-        }else{
-          dogsW[i].pmax= dogsW[i].pmin
+
+        if (peso.length > 1) {
+          //p/setear el pmax
+          dogsW[i].pmax = parseInt(peso[1].trim());
+        } else {
+          dogsW[i].pmax = dogsW[i].pmin;
         }
       }
 
       if (action.payload === "min") {
         dogsW.sort(function (a, b) {
           //return a.pmin - b.pmin; //por menor del peso min
-          return ((a.pmin + a.pmax)/2) - ((b.pmin + b.pmax)/2);//xpromedio
+          return (a.pmin + a.pmax) / 2 - (b.pmin + b.pmax) / 2; //xpromedio
         });
-
       } else if (action.payload === "max") {
         dogsW.sort(function (a, b) {
           //return b.pmax - a.pmax;//por mayor del peso max
-          return ((b.pmin + b.pmax)/2) - ((a.pmin + a.pmax)/2);//por promedio
+          return (b.pmin + b.pmax) / 2 - (a.pmin + a.pmax) / 2; //por promedio
         });
       }
       return {

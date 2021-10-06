@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDogs, getTemperaments, filterByTemperament, filterByCreated, orderByName, orderByWeight } from "../../actions";
 import OneDog from "../OneDog/OneDog.jsx";
 import Paging from "../Paging/Paging.jsx";
+import SearchBar from "../SearchBar/SearchBar.jsx";
 import Styles from "./Home.module.css";
 
 //ACA PUEDO HACER UN NAV para las opciones de volver a mostrar las razas,
@@ -107,10 +108,8 @@ export default function Home() {
           <option value="min"> Menor Peso</option>
           <option value="max"> Mayor Peso</option>
         </select>
-
-        <select>
-          <option> Mostrar Raza que contenga el Nombre:</option>
-        </select>
+        
+        <SearchBar/>
         
         <h3>LISTADO DE RAZAS</h3>
 
