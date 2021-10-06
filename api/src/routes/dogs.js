@@ -59,8 +59,8 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
                 name: el.name,
                 temperament: tp.join(', '), // muestra el array como string 
                 image: "No existe imágen",
-                createInDb: el.createInDb
-                //weight: el.weight
+                createInDb: el.createInDb,
+                weight: el.weight
             }
         }else{//es de la Api
             //let tpApi= el.temperament.split(',');//convierte el string temperament en un array
@@ -68,8 +68,8 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
                 id: el.id,
                 name: el.name,
                 temperament: el.temperament, ///modifique desde .split!!! 
-                image: el.image
-                //weight: el.weight                
+                image: el.image,
+                weight: el.weight                
             }
         }
     });

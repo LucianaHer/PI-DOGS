@@ -53,3 +53,5 @@ export function orderByWeight(payload){
         payload
     }
 }
+
+export function searchByName(){}

@@ -81,7 +81,7 @@ export default function Home() {
             Input para traer razas por nombre */}
 
         <select name="abcOrden" onChange={ev => handleABC(ev)}>
-          <option value='asc' key='0'> Orden x Nombre Raza </option>
+          <option value='all' key='0'> Orden x Nombre Raza </option>
           <option value="asc" key='1'> Ascendente </option>
           <option value="desc" key='2'> Descendente  Z-A </option>
         </select>
@@ -103,7 +103,7 @@ export default function Home() {
         
 
         <select name="orderWeight" onChange={e => handleWeight(e)} >
-          <option value="All"> Orden por Peso</option>
+          <option value="All"> Orden Peso Promedio</option>
           <option value="min"> Menor Peso</option>
           <option value="max"> Mayor Peso</option>
         </select>

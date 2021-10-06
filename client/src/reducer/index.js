@@ -94,27 +94,20 @@ function rootReducer(state = initialState, action) {
 
     case "ORDER-BY-WEIGHT":
       var dogsW = [...state.dogs];
-      var dogsW2 = [];
-      var pesoMin = 0;
-      var pesoMax = 0;
 
       for (let i = 0; i < dogsW.length; i++) {
-        console.log(" peso del dog:", dogsW[i].weight, typeof dogsW[i].weight);
         var peso = dogsW[i].weight.split("-"); //array
-        console.log(" peso del dog Array", peso);
+        if( peso[0] && peso[1] && peso[0].trim()==='NaN') peso[0]=peso[1];
+        if(peso[1] && peso[0] && peso[1].trim()==='NaN') peso[1]= peso[0];
   
-        if (dogsW[i].weight === "NaN" ) { //p/setar
+        if (dogsW[i].weight === "NaN" ) { //p/setar el pmnin
           dogsW[i].pmin = 100;
         } else {
           dogsW[i].pmin = parseInt(peso[0].trim());
         }
-        if(peso.length >1){
-            
-            // if(dogsW[i].pmin ==="NaN"){
-            //   dogsW[i].pmin= parseInt(peso[1].trim());
-            // }
+        
+        if(peso.length >1){ //p/setear el pmax
             dogsW[i].pmax=parseInt(peso[1].trim());
-            //dogsW[i].peso_prom=(pesoMin+pesoMax)/2;
         }else{
           dogsW[i].pmax= dogsW[i].pmin
         }

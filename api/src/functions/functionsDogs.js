@@ -15,11 +15,11 @@ const getInfoAPI = async () => {  // Fc para obtener todas las razas de la API
             return {
                 id: el.id,
                 name: el.name,
-                altura: el.height.metric,
+                height: el.height.metric,
                 image: el.image.url,
-                vida: el.life_span,
+                life_span: el.life_span,
                 temperament: el.temperament,
-                peso: el.weight.metric
+                weight: el.weight.metric
                 //origen: el.origin
             }
         })
