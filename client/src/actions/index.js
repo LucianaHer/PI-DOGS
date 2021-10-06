@@ -46,3 +46,10 @@ export function orderByName(payload) {  // payload es el value de este select(as
         payload
     }
 }
+
+export function orderByWeight(payload){
+    return{
+        type: "ORDER-BY-WEIGHT",
+        payload
+    }
+}

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDogs, getTemperaments, filterByTemperament, filterByCreated, orderByName } from "../../actions";
+import { getDogs, getTemperaments, filterByTemperament, filterByCreated, orderByName, orderByWeight } from "../../actions";
 import OneDog from "../OneDog/OneDog.jsx";
 import Paging from "../Paging/Paging.jsx";
 import Styles from "./Home.module.css";
@@ -59,8 +59,15 @@ export default function Home() {
 
   // funcion para ordenar las razas en orden asc o desc cdo se selecciona el select, y despacha la accion orderByName
   function handleABC(ev){
-    //ev.preventDefault();
+      ev.preventDefault();
       dispatch(orderByName(ev.target.value));
+      //setPagActual(1);
+  }
+
+  function handleWeight(e){
+    e.preventDefault();
+    dispatch(orderByWeight(e.target.value));
+    setPagActual(1);
   }
 
   return (
@@ -74,9 +81,9 @@ export default function Home() {
             Input para traer razas por nombre */}
 
         <select name="abcOrden" onChange={ev => handleABC(ev)}>
-          <option value='asc' key='0'> ORDEN Asc/Desc </option>
-          <option value="asc" key='1'> Ordenar  A-Z </option>
-          <option value="desc" key='2'> Ordenar  Z-A </option>
+          <option value='asc' key='0'> Orden x Nombre Raza </option>
+          <option value="asc" key='1'> Ascendente </option>
+          <option value="desc" key='2'> Descendente  Z-A </option>
         </select>
   
         <select name="temps" onChange={event => handleFilterTemp(event)}>
@@ -95,8 +102,10 @@ export default function Home() {
 
         
 
-        <select>
-          <option> Orden por Peso</option>
+        <select name="orderWeight" onChange={e => handleWeight(e)} >
+          <option value="All"> Orden por Peso</option>
+          <option value="min"> Menor Peso</option>
+          <option value="max"> Mayor Peso</option>
         </select>
 
         <select>
@@ -113,6 +122,7 @@ export default function Home() {
                   name={el.name}
                   temperament={el.temperament} 
                   image={el.image}
+                  weight={el.weight}
                 />
               </div>
             );

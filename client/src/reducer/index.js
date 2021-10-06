@@ -1,7 +1,7 @@
 const initialState = {
   allDogs: [], //copia del estado q siempre va a tener todos los dogs
   dogs: [],
-  temps: []
+  temps: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -14,12 +14,11 @@ function rootReducer(state = initialState, action) {
       };
 
     case "GET-TEMPERAMENT":
-
       return {
         ...state,
         temps: action.payload,
       };
-    
+
     case "FILTER-BY-TEMP":
       var dogsF = state.allDogs; // siempre me traigo todos los dogs del estado inmutable
       var tempFilter = [];
@@ -48,77 +47,95 @@ function rootReducer(state = initialState, action) {
         createdFilter = dogsC;
       } else if (action.payload === "razaBD") {
         dogsC.forEach((el) => {
-            if(el.hasOwnProperty('createInDb')){
-                createdFilter.push(el);
-            }
-        });       
+          if (el.hasOwnProperty("createInDb")) {
+            createdFilter.push(el);
+          }
+        });
       } else {
         dogsC.forEach((el) => {
-            if(! el.hasOwnProperty('createInDb')){
-                createdFilter.push(el);
-            }
-        });       
+          if (!el.hasOwnProperty("createInDb")) {
+            createdFilter.push(el);
+          }
+        });
       }
       return {
         ...state,
         dogs: createdFilter,
       };
 
-    case "ORDER-BY-NAME":    
-      //var orderDogs= [];
+    case "ORDER-BY-NAME":
       const dogsOr = [...state.dogs];
-      //const dogsOr = state.dogs;
-      console.log("ORDEN: ", action.payload)
 
-      var ordedDogs= action.payload==='asc' ?
-      dogsOr.sort(function (a, b){
-          if(a.name > b.name){
-              return 1;
-          }
-          if(b.name > a.name){
-              return -1;
-          }
-          return 0;
-      }) :
-      dogsOr.sort(function(a, b){
-          if(a.name > b.name){
-              return -1;
-          }
-          if(b.name > a.name){
-              return 1;
-          }
-          return 0;
-      })
-      console.log("ARRAY ORDENADO: ",dogsOr)
-      console.log("ESTADO: ", state.dogs)
-      return{
-          ...state,
-          dogs: ordedDogs
+      var ordedDogs =
+        action.payload === "asc"
+          ? dogsOr.sort(function (a, b) {
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (b.name > a.name) {
+                return -1;
+              }
+              return 0;
+            })
+          : dogsOr.sort(function (a, b) {
+              //desc
+              if (a.name > b.name) {
+                return -1;
+              }
+              if (b.name > a.name) {
+                return 1;
+              }
+              return 0;
+            });
+      return {
+        ...state,
+        dogs: ordedDogs,
       };
-    
 
-    //   if(action.payload ==="asc"){
-    //       console.log("ENTROOOOOOO x ASC?")
-    //     orderDogs= state.dogs.sort(function (a, b) {
-    //         if (a.name > b.name) return 1;
-    //         if (a.name < b.name) return -1;
-    //         return 0; // a must be equal to b
-    //       });
-    //   } else{
-    //     console.log("ENTROOOOOOO XDESC?")
-    //     orderDogs=state.dogs.sort(function (a, b) {
-    //         if (a.name > b.name) return 1;
-    //         if (a.name < b.name) return -1;
-    //         return 0; // a must be equal to b
-    //       });
-    //   }
-    //   console.log("SALIIIII?")
-    //   console.log("Listado:", orderDogs)
-    //   return{
-    //       ...state,
-    //       dogs: orderDogs
-    //   }
+    case "ORDER-BY-WEIGHT":
+      var dogsW = [...state.dogs];
+      var dogsW2 = [];
+      var pesoMin = 0;
+      var pesoMax = 0;
 
+      for (let i = 0; i < dogsW.length; i++) {
+        console.log(" peso del dog:", dogsW[i].weight, typeof dogsW[i].weight);
+        var peso = dogsW[i].weight.split("-"); //array
+        console.log(" peso del dog Array", peso);
+  
+        if (dogsW[i].weight === "NaN" ) { //p/setar
+          dogsW[i].pmin = 100;
+        } else {
+          dogsW[i].pmin = parseInt(peso[0].trim());
+        }
+        if(peso.length >1){
+            
+            // if(dogsW[i].pmin ==="NaN"){
+            //   dogsW[i].pmin= parseInt(peso[1].trim());
+            // }
+            dogsW[i].pmax=parseInt(peso[1].trim());
+            //dogsW[i].peso_prom=(pesoMin+pesoMax)/2;
+        }else{
+          dogsW[i].pmax= dogsW[i].pmin
+        }
+      }
+
+      if (action.payload === "min") {
+        dogsW.sort(function (a, b) {
+          //return a.pmin - b.pmin; //por menor del peso min
+          return ((a.pmin + a.pmax)/2) - ((b.pmin + b.pmax)/2);//xpromedio
+        });
+
+      } else if (action.payload === "max") {
+        dogsW.sort(function (a, b) {
+          //return b.pmax - a.pmax;//por mayor del peso max
+          return ((b.pmin + b.pmax)/2) - ((a.pmin + a.pmax)/2);//por promedio
+        });
+      }
+      return {
+        ...state,
+        dogs: dogsW,
+      };
 
     default:
       return state;
