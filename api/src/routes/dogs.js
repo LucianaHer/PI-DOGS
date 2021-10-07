@@ -15,21 +15,21 @@ const {
 
 ///// RUTA (POST)  /DOGS  
 router.post('/', async (req,res) =>{
-    var {nombre, altura, peso, años, temperaments}= req.body; //!! temperaments es un array
+    var {name, height, weight, life_span, temperaments}= req.body; //!! temperaments es un array
     
-    if (!nombre || !altura || !peso){ //campos allowNull: false
+    if (!name || !height || !weight){ //campos allowNull: false
         return res.send('faltan datos ')
     }
-    nombre=capitalizar(nombre);  //fc q capitaliza string
+    name=capitalizar(name);  //fc q capitaliza string
     try{
         const[dog, created]= await Dog.findOrCreate({
             where:{
-              name: nombre,
+              name: name,
             },
             defaults:{
-                height: altura,
-                weight: peso,
-                life_span: años      
+                height: height,
+                weight: weight,
+                life_span: life_span      
             }   
         });
         if ( created===true && temperaments!==undefined){ //se crean los temperaments pasados x body
@@ -58,7 +58,7 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
                 id:el.id,//esto es para control de Postman, poder tomar la id
                 name: el.name,
                 temperament: tp.join(', '), // muestra el array como string 
-                image: "No existe imágen",
+                //image: "No existe imágen",
                 createInDb: el.createInDb,
                 weight: el.weight
             }

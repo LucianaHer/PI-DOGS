@@ -27,6 +27,10 @@ function rootReducer(state = initialState, action) {
         dogs: action.payload
       }
 
+    case "POST-DOG":
+      return {
+        ...state
+      }
 
     case "FILTER-BY-TEMP":
       var dogsF = state.allDogs; // siempre me traigo todos los dogs del estado inmutable

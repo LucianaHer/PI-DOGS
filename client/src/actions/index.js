@@ -48,6 +48,19 @@ export function searchByName(name) {
   };
 }
 
+export function postDog(payload){ // el payload me llega del form, es el obj a crear en la tabla
+  return async function (dispatch) {
+    //ACA SE CONECTA CON EL BACK (post /dogs)
+    console.log("Payload de postDog: ",payload)
+    
+      var json = await axios.post("http://localhost:3001/dogs", payload); //le paso x BODY el obj creado en el form
+      console.log("REGISTRO CREADO: ",json)
+      return json;
+
+  };
+
+}
+
 export function filterByTemperament(payload) {
   // el payload es el value del select=> un temp de la lista
   console.log(payload);

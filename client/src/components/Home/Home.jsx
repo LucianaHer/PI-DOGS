@@ -6,6 +6,7 @@ import OneDog from "../OneDog/OneDog.jsx";
 import Paging from "../Paging/Paging.jsx";
 import SearchBar from "../SearchBar/SearchBar.jsx";
 import Styles from "./Home.module.css";
+import bd_img from '../../images/perrito3.jpg'
 
 //ACA PUEDO HACER UN NAV para las opciones de volver a mostrar las razas,
 
@@ -13,10 +14,10 @@ export default function Home() {
   const dispatch = useDispatch();
   //metraigo los Dogs del estado
   var razas = useSelector((state) => state.dogs);
-  console.log("ESTADO: ",razas[0])
+  console.log("ESTADO: ",razas[4])
 
   //me traigo los temperamentos del Estado
-  const allTemps = useSelector((state) => state.temps); //(array de temps strings )
+  const allTemps = useSelector((state) => state.temps); 
 
   //paginado
   const [pagActual, setPagActual] = useState(1);
@@ -62,7 +63,7 @@ export default function Home() {
   function handleABC(ev){
       ev.preventDefault();
       dispatch(orderByName(ev.target.value));
-      //setPagActual(1);
+      setPagActual(1);
   }
 
   function handleWeight(e){
@@ -73,7 +74,7 @@ export default function Home() {
 
   return (
     <div>
-      <Link to="/dog"> Crear Nueva Raza</Link>
+      <Link to="/newDog"> Crear Nueva Raza</Link>
       <button onClick={(e) => handleOnClick(e)}>Cargar toda las Razas</button>
       <div>
         {/* aca irian los filtrados: por raza de la api o agregada xnos / por temperamento
@@ -120,7 +121,8 @@ export default function Home() {
                 <OneDog
                   name={el.name}
                   temperament={el.temperament} 
-                  image={el.image}
+                  //image={el.image}
+                  image={el.image ? el.image : bd_img }
                   weight={el.weight}
                 />
               </div>

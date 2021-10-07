@@ -91,7 +91,7 @@ const getOneByIdBD = async function(idRaza){// Para encontrar un dog en la BD x 
             
             var dogDetail= {  //seteo un objeto ppara devolver los datos listos
                 name: oneDogBD.name,
-                image: "No existe imágen",
+                //image: "No existe imágen",
                 altura: oneDogBD.height,
                 peso: oneDogBD.weight,
                 vida: oneDogBD.life_span,
