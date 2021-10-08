@@ -112,7 +112,7 @@ export default function Home() {
         
         <SearchBar/>
         
-        <h3>LISTADO DE RAZAS</h3>
+       {/*  <h3>LISTADO DE RAZAS</h3> */}
 
         <div className={Styles.cards}>
           {currentDogs?.map((el) => {

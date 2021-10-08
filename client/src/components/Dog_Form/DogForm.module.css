@@ -1,0 +1,22 @@
+.error{
+    color: red;
+}
+
+.temps {float:left;margin-right:10px;} 
+.tDelete{float:left;} 
+
+
+input:valid,
+textarea:valid {
+    color: rgb(23, 34, 190);
+    /* background: rgb(147, 173, 147); */
+}
+
+input:invalid,
+textarea:invalid {
+    color: red;
+    /* background: rgb(214, 114, 114); */
+}
+
+
+
