@@ -9,25 +9,40 @@ import Styles from './DogForm.module.css'
 
 
  //validaciones
-//  export function validate(objForm) {
+  function validate(objForm) {
 
-//     var errores = {};
-//     var arrW= objForm.weight.split('-');
-//     var arrH= objForm.height.split('-');
+    var errores = {};
+    var arrW= objForm.weight.split('-');
+    var arrH= objForm.height.split('-');
+    var mjeWeigth="El peso minimo debe ser menor que el máximo!!"
+    var mjeHeight="La altura mínima debe ser menor que la máxima!!"
 
-//     if(arrW[0]>arrW[1]){
-//         errores.weight="El peso minimo debe ser menor que el máximo!!"
-//     }
-//     if(arrH[0]>arrH[1]){
-//         errores.height="La altura mínima debe ser menor que la máxima!!"
-//     }
-    
-//     if(objForm.life_span > 25){
-//         errores.life_span="Los perros no pueden vivir tanto (hasta 25 años aceptado) !!!"
-//     }
 
-//     return errores;
-//   };
+    if(arrW[0] && arrW[1]){
+        if(arrW[0].length>arrW[1].length)  {
+            errores.weight=mjeWeigth;
+        }else if(arrW[0].length===arrW[1].length) {
+            if(arrW[0]>arrW[1]){
+                errores.weight=mjeWeigth;
+            }
+        }
+    } 
+    if(arrH[0] && arrH[1]){
+        if(arrH[0].length>arrH[1].length)  {
+            errores.height=mjeHeight;
+        }else if(arrH[0].length===arrH[1].length) {
+            if(arrH[0]>arrH[1]){
+                errores.height=mjeHeight;
+            }
+        }
+    } 
+        
+    if(objForm.life_span > 25){
+        errores.life_span="Los perros no pueden vivir tanto (hasta 25 años aceptado) !!!"
+    }
+
+    return errores;
+  };
 
 
 export default function Dog_Form() {
@@ -36,7 +51,7 @@ export default function Dog_Form() {
     const allTemps = useSelector((state) => state.temps); 
     var inputTemp1;
 
-    //const [errors, setErrors]=useState({});
+    const [errors, setErrors]=useState({});
     
     const[objForm, setObjForm]= useState({
         name:"",
@@ -57,10 +72,10 @@ export default function Dog_Form() {
             [e.target.name] : e.target.value
         })
 
-        // setErrors(validate({
-        //     ...objForm,
-        //     [e.target.name] : e.target.value
-        // }))
+        setErrors(validate({
+            ...objForm,
+            [e.target.name] : e.target.value
+        }))
     }
 
     function handleSelect(e){
@@ -89,6 +104,8 @@ export default function Dog_Form() {
               life_span: "",
               temperaments: [],
             });
+
+        setErrors({})
     }
    
     function handleSubmit(e){
@@ -133,7 +150,10 @@ export default function Dog_Form() {
               title="solo numeros, formato permitido: ej: 0-90 " 
               required 
               onChange={(e) => handleInputChange(e)}
-            />          
+            /> 
+            {errors.weight && (
+                <p className={Styles.error}> {errors.weight} </p>
+            )}         
           </div>
 
           <div>
@@ -148,9 +168,9 @@ export default function Dog_Form() {
               required 
               onChange={(e) => handleInputChange(e)}
             />
-            {/* {errors.height && (
+            {errors.height && (
                 <p className={Styles.error}> {errors.height} </p>
-            )} */}
+            )}
           </div>
 
           <div>
@@ -164,9 +184,9 @@ export default function Dog_Form() {
               title="Solo números, de 1 a 2 digitos ej: 15 (Años promedio de vida)" 
               onChange={(e) => handleInputChange(e)}
             />
-            {/* {errors.life_span && (
+            {errors.life_span && (
                 <p className={Styles.error}> {errors.life_span} </p>
-            )} */}
+            )}
           </div>
 
           <div>
