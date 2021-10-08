@@ -1,7 +1,10 @@
+
+
 const initialState = {
   allDogs: [], //copia del estado q siempre va a tener todos los dogs
   dogs: [],
   temps: [],
+  detail: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -31,6 +34,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state
       }
+
+    case "GET-DOG-DETAIL-ID":
+      return{
+        ...state,
+        detail: action.payload
+      }  
 
     case "FILTER-BY-TEMP":
       var dogsF = state.allDogs; // siempre me traigo todos los dogs del estado inmutable

@@ -34,7 +34,6 @@ export function getTemperaments() {
 //CONECTA CON EL BACK (get /dogs?name=)
 export function searchByName(name) {
   return async function (dispatch) {
-    //ACA SE CONECTA CON EL BACK (get /dogs)
     try {
       var json = await axios.get("http://localhost:3001/dogs?name=" + name);
 
@@ -48,9 +47,9 @@ export function searchByName(name) {
   };
 }
 
+// CONECTA CON EL BACK (post /dogs)
 export function postDog(payload){ // el payload me llega del form, es el obj a crear en la tabla
   return async function (dispatch) {
-    //ACA SE CONECTA CON EL BACK (post /dogs)
     console.log("Payload de postDog: ",payload)
     
       var json = await axios.post("http://localhost:3001/dogs", payload); //le paso x BODY el obj creado en el form
@@ -59,6 +58,21 @@ export function postDog(payload){ // el payload me llega del form, es el obj a c
 
   };
 
+}
+
+export function getDogDetail(id){
+  return async function (dispatch) {
+    try {
+      var json = await axios.get("http://localhost:3001/dogs/" + id);
+
+      return dispatch({
+        type: "GET-DOG-DETAIL-ID",
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log("No se pudo obtener datos de la raza", error);
+    }
+  };
 }
 
 export function filterByTemperament(payload) {

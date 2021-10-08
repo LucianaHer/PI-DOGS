@@ -132,7 +132,7 @@ export default function Dog_Form() {
               value={objForm.name}
               name="name"
               placeholder="Nombre de la raza..."
-              pattern="[a-zA-Z]{2,20}"
+              pattern="[a-zA-Z ]{2,20}"
               title="Solo letras, hasta 20 caracteres ej: Abc..." 
               required
               onChange={(e) => handleInputChange(e)}

@@ -51,12 +51,14 @@ export default function Home() {
 
   //funcion para tomar el select de temperamentos y despachar la accion de filtrar temp, para renderizar los dogs fitrados
   function handleFilterTemp(event){
-      dispatch(filterByTemperament(event.target.value)); 
+      dispatch(filterByTemperament(event.target.value))
+      setPagActual(1);; 
   }
 
   //funcion para tomar el select de Razas Creadas / Existentes y despachar la accion filterByCreated
   function handleFilterCreated(e){
       dispatch(filterByCreated(e.target.value));
+      setPagActual(1);
   }
 
   // funcion para ordenar las razas en orden asc o desc cdo se selecciona el select, y despacha la accion orderByName
@@ -74,7 +76,8 @@ export default function Home() {
 
   return (
     <div>
-      <Link to="/newDog"> Crear Nueva Raza</Link>
+      <Link to="/newDog"> Crear Nueva Raza</Link> 
+      <Link to="/"><button>Volver a Pag de Inicio</button></Link>
       <button onClick={(e) => handleOnClick(e)}>Cargar toda las Razas</button>
       <div>
         {/* aca irian los filtrados: por raza de la api o agregada xnos / por temperamento
@@ -119,6 +122,7 @@ export default function Home() {
             return (
               <div>
                 <OneDog
+                  id={el.id}
                   name={el.name}
                   temperament={el.temperament} 
                   //image={el.image}
