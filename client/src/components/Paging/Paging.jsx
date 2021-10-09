@@ -10,7 +10,7 @@ export default function Paging({ dogsPorPag, allDogs, paginado }) {
   
   }
   return (
-    <nav>
+    <div>
        <ul className={Styles.ul}> 
         {pageNumbers && 
         pageNumbers.map(number => (  //mapea cada numerito de la cant de pag( c/nrito=> pag de 8 cards)
@@ -19,6 +19,6 @@ export default function Paging({ dogsPorPag, allDogs, paginado }) {
            </li> 
         ))}
        </ul> 
-    </nav>
+    </div>
   );
 }
