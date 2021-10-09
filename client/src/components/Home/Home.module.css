@@ -14,12 +14,91 @@
 }
 
 .nav{
- display: flex;
+  width: 96%;
+  margin: 0 auto;
+  padding: 5px;
+  display: flex;
   flex-direction:row;
+  /* flex-wrap: row wrap; */
+  border: 2px solid crimson;
+  border-radius: 30px;
 
+  background-color: rgb(189, 182, 182);
+  /* font-weight: bold; */
+ justify-content: space-between;
+ align-items: flex-start;
+ align-content: center;
+}
+
+.select{
+        
+text-decoration: none;
+margin: 10px;
+height: 30px;
+color: white;
+font: bold 14px Arial, Helvetica;
+font-size: 15px;
+
+background-color: #da4f3c;
+    background-image: linear-gradient(#e45149, #b42b19);
+    border-radius: 8px;
+    text-shadow: 0 2px 0 rgba(32, 30, 30, 0.8); 
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.466), 0 3px 0 rgba(19, 18, 18, 0.239), 0 2px 2px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.5) inset; 
+}
+.select:hover {
+    background-color: #bb413b;
+    background-image: linear-gradient(#831608, #bb413b);
+   
+}
+
+.link{
+    text-decoration: none;
+    outline: none;
+    
+    margin: 10px;
+    height: 30px;
+    color: white;
+    font: bold 14px Arial, Helvetica;
+    font-size: 15px;
+    text-align:center;
+    text-transform: uppercase;
+    
+      
+}
+.link:active{
+    text-decoration: none;
+}
+
+.navIzq{
+    display: flex;
+    flex-direction:row;
+    justify-content: left;
+    justify-content: space-between;
+}
+.navDer{
+
+    display: flex;
+    flex-direction:row;
+    justify-content: right;
+    justify-content: space-between;
+}
+
+.options{
+    background-color: white;
+    color: crimson;
+    font:bold;
 }
 
 .cards{
     display: grid;
     grid-template-columns: repeat(4, 3fr); 
+}
+
+
+pagingDiv{
+    height: 80%;
+    width: 10%;
+    position:absolute;
+    background-color: yellow;
+
 }

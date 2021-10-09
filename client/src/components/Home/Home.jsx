@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -81,55 +81,73 @@ export default function Home() {
     setPagActual(1);
   }
 
+
+   /* aca irian los filtrados: por raza de la api o agregada xnos / por temperamento
+                    Orden ascendente / descandente de las razas de perro x orden alfabético y por peso
+                    paginado
+                Input para traer razas por nombre */
   return (
     <div className={Styles.divgral}>
       
       <nav className={Styles.nav}>
+        <div className={Styles.navIzq}>
+          <select className={Styles.select} name="created" onChange={(e) => handleFilterCreated(e)}>
+              <option className={Styles.options} value="All" key="3">Todas las razas</option>
+              <option className={Styles.options} value="razaApi" key="4">Razas Existentes</option>
+              <option className={Styles.options} value="razaBD" key="5">Razas Creadas</option>
+            </select>
 
-      <select name="created" onChange={(e) => handleFilterCreated(e)}>
-          <option value="All" key="3">Todas las razas</option>
-          <option value="razaApi" key="4">Razas Existentes</option>
-          <option value="razaBD" key="5">Razas Creadas</option>
-        </select>
 
+            <select className={Styles.select} name="abcOrden" onChange={(ev) => handleABC(ev)}>
+              <option className={Styles.options} value="all" key="0"> Orden x Nombre Raza</option>
+              <option className={Styles.options} value="asc" key="1">Ascendente </option>
+              <option className={Styles.options} value="desc" key="2">Descendente Z-A</option>
+            </select>
 
-        <select name="abcOrden" onChange={(ev) => handleABC(ev)}>
-          <option value="all" key="0"> Orden x Nombre Raza</option>
-          <option value="asc" key="1">Ascendente </option>
-          <option value="desc" key="2">Descendente Z-A</option>
-        </select>
+            <select className={Styles.select} name="orderWeight" onChange={(e) => handleWeight(e)}>
+              <option className={Styles.options} value="All"> Orden Peso Promedio</option>
+              <option className={Styles.options} value="min"> Menor Peso</option>
+              <option className={Styles.options} value="max"> Mayor Peso</option>
+            </select>
 
-        <select name="orderWeight" onChange={(e) => handleWeight(e)}>
-          <option value="All"> Orden Peso Promedio</option>
-          <option value="min"> Menor Peso</option>
-          <option value="max"> Mayor Peso</option>
-        </select>
+            <select className={Styles.select} name="temps" onChange={(event) => handleFilterTemp(event)}>
+              <option className={Styles.options} value="All" key={100}>Temperamentos</option>
+              {allTemps.map((t) => (
+                <option className={Styles.options} key={t.id} value={t.nameTemp}>{t.nameTemp}</option>
+              ))}
+            </select>
+          </div>
 
-        <select name="temps" onChange={(event) => handleFilterTemp(event)}>
-          <option value="All" key={100}>Temperamentos</option>
-          {allTemps.map((t) => (
-            <option key={t.id} value={t.nameTemp}>{t.nameTemp}</option>
-          ))}
-        </select>
+          <div className={Styles.select}>
+              <NavLink className={Styles.link} to="/"  > Volver a  Inicio </NavLink>
+            </div>
 
-        <SearchBar />
-
-        <Link to="/newDog"> Crear Nueva Raza</Link>
-        
-        <Link to="/">
-          <button>Volver a Pag de Inicio</button>
-        </Link>
-        
-        {/* <button onClick={(e) => handleOnClick(e)}>Cargar toda las Razas</button> */}
-        {/* aca irian los filtrados: por raza de la api o agregada xnos / por temperamento
-                Orden ascendente / descandente de las razas de perro x orden alfabético y por peso
-                paginado
-            Input para traer razas por nombre */}
+          <div className={Styles.navDer}>
+            <div /* className={Styles.select} */>
+              <SearchBar />
+            </div>
+            
+            <div className={Styles.select}>
+              <NavLink className={Styles.link} to="/newDog"> Crear Nueva Raza</NavLink>
+            </div>
+            
+            
+            
+            {/* <button onClick={(e) => handleOnClick(e)}>Cargar toda las Razas</button> */}
+           
+          </div>
       </nav>
 
         {/*  <h3>LISTADO DE RAZAS</h3> */}
         
-
+        <div >
+          <Paging 
+            dogsPorPag={dogsPorPag}
+            allDogs={razas.length}
+            paginado={paginado}
+          />
+        </div>
+        
         <div className={Styles.cards}>
           {currentDogs?.map((el) => {
             return (
@@ -148,13 +166,7 @@ export default function Home() {
         </div>
 
 
-        <div>
-          <Paging
-            dogsPorPag={dogsPorPag}
-            allDogs={razas.length}
-            paginado={paginado}
-          />
-        </div>
+        
       </div>
     
   );
