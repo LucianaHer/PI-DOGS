@@ -1,10 +1,72 @@
-.lp{
-    background-image: url('../../images/dog_family.jpg');
-    background-repeat: no-repeat;
-    background-size:cover;
-    position:absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+.lp {
+  max-width: 90%;
+
+  background-image: url("../../images/dog_family1.jpg");
+  background-size: 85% 100%;
+  background-repeat: no-repeat;
+  background-position:right;
+
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0%;
+  right: 0;
 }
+
+.patern{
+    height: 100%;
+    width:15%;
+background-image: url("../../images/patern3.jpg");
+background-size: 100% 50%;
+background-repeat: repeat-y;
+position:static;
+border-right: 8px solid rgb(238, 255, 0);
+}
+
+.botonIm {
+  width: 200px;
+  height: 200px;
+  border: solid #dfe864 9px;
+  border-radius: 50%;
+  margin-left: 55%;
+  margin-top: 140%;
+}
+
+.title {
+    z-index: 1;
+    position: absolute;
+  font-family: impact, sans-serif;
+  font-size: 130px;
+  padding: 0;
+  margin-left: 10%;
+  padding-top: 0;
+  margin-top: 0;
+  color: rgb(226, 10, 54);
+  letter-spacing: 5pt;
+  line-height: 2.6;
+  /* text-shadow: 6px 6px 4px rgb(184, 175, 175); */
+  text-shadow: 0 0 20px #fefcc9, 2px -2px 3px #feec85, -4px -4px 5px #ffae34, 5px -10px 6px #ec760c, -5px -12px 8px #cd4606, 0 -15px 20px #973716, 2px -15px 20px #451b0e;
+
+  
+   
+}
+
+.bienvenidos{
+    z-index: 2;
+    position: absolute;
+    float:inline;
+  font-family: impact, sans-serif;
+  font-size: 50px;
+  padding: 0;
+  margin-left: 25%;
+  margin-bottom: 50%;
+  padding-top: 0;
+  margin-top: 0;
+  color: rgb(104, 100, 101);
+  
+  letter-spacing: 4pt;
+  line-height: 2.6;
+  text-shadow: -1px 0 rgb(221, 228, 125), 1px 0 rgb(221, 228, 125), 0 1px rgb(221, 228, 125), 0 -1px rgb(221, 228, 125);
+}
+
