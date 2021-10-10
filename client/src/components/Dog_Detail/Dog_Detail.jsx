@@ -22,24 +22,54 @@ export default function DogDetail() {
   return (
     <div className={Styles.divgral}>
       {myDog ? (
-        <div>
-          <h1>RAZA: {myDog.name}</h1>
-          {myDog.image ? (
-            <img src={myDog.image} alt="imagen API no encontrada"></img>
-          ) : (
-            <img src={bd_img} alt="imagen BD encontrada"></img>
-          )}
-          <h2>Temperamento/s: {myDog.temperament}</h2>
-          <h3>Peso: {myDog.weight} </h3>
-          <h3>Altura: {myDog.height}</h3>
-          <h4>Promedio de vida: {myDog.life_span}</h4>
+        <div id="conteinerGrid" className={Styles.conteinerGrid}>
+          <div id="1° columna">
+            {/* <div id="Raza"> */}
+            <h1 className={Styles.raza}>{myDog.name}</h1>
+            {/* </div> */}
+            {/* <div id="imagen" > */}
+            {myDog.image ? (
+              <img
+                className={Styles.imagen}
+                src={myDog.image}
+                alt="imagen API no encontrada"
+              ></img>
+            ) : (
+              <img src={bd_img} alt="imagen BD encontrada"></img>
+            )}
+            {/* </div> */}
+          </div>
+
+          <div id="2°columna">
+
+            <Link  to="/home">
+              <button className={Styles.volver}>Volver</button>
+            </Link>
+
+            {/* <div id="peso"> */}
+            <h3 className={Styles.peso}>Peso: {myDog.weight} Kgs </h3>
+            {/* </div> */}
+            {/* <div id="altura"> */}
+            <h3 className={`${Styles.peso} ${Styles.altura}`}>
+              Altura: {myDog.height} cm
+            </h3>
+            {/* </div> */}
+            {/* <div id="vida"> */}
+            <h3 className={`${Styles.peso} ${Styles.vida}`}>
+              Prom. de vida: {myDog.life_span}{" "}
+            </h3>
+            {/* </div> */}
+            {/* <div id="temperamentos">  */}
+            <h3 className={`${Styles.peso} ${Styles.temperamentos}`}>
+              {" "}
+              {myDog.temperament}
+            </h3>
+            {/* </div>            */}
+          </div>
         </div>
       ) : (
         <h3>"No se encontró esa raza"</h3>
       )}
-      <Link to="/home">
-          <button>Volver</button>
-        </Link>
     </div>
   );
 }
