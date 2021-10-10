@@ -88,86 +88,80 @@ export default function Home() {
                 Input para traer razas por nombre */
   return (
     <div className={Styles.divgral}>
-      
       <nav className={Styles.nav}>
         <div className={Styles.navIzq}>
-          <select className={Styles.select} name="created" onChange={(e) => handleFilterCreated(e)}>
-              <option className={Styles.options} value="All" key="3">Todas las razas</option>
-              <option className={Styles.options} value="razaApi" key="4">Razas Existentes</option>
-              <option className={Styles.options} value="razaBD" key="5">Razas Creadas</option>
-            </select>
+          <select className={Styles.select} name="created"  onChange={(e) => handleFilterCreated(e)}>
+            <option className={Styles.options} value="All" key="3">Todas las razas</option>
+            <option className={Styles.options} value="razaApi" key="4">Razas Existentes</option>
+            <option className={Styles.options} value="razaBD" key="5">Razas Creadas</option>
+          </select>
 
+          <select className={Styles.select} name="abcOrden" onChange={(ev) => handleABC(ev)}>
+            <option className={Styles.options} value="all" key="0">Orden x Nombre Raza</option>
+            <option className={Styles.options} value="asc" key="1">Ascendente</option>
+            <option className={Styles.options} value="desc" key="2">Descendente Z-A</option>
+          </select>
 
-            <select className={Styles.select} name="abcOrden" onChange={(ev) => handleABC(ev)}>
-              <option className={Styles.options} value="all" key="0"> Orden x Nombre Raza</option>
-              <option className={Styles.options} value="asc" key="1">Ascendente </option>
-              <option className={Styles.options} value="desc" key="2">Descendente Z-A</option>
-            </select>
+          <select className={Styles.select} name="orderWeight" onChange={(e) => handleWeight(e)}>
+            <option className={Styles.options} value="All">Orden Peso Promedio</option>
+            <option className={Styles.options} value="min">Menor Peso</option>
+            <option className={Styles.options} value="max">Mayor Peso</option>
+          </select>
 
-            <select className={Styles.select} name="orderWeight" onChange={(e) => handleWeight(e)}>
-              <option className={Styles.options} value="All"> Orden Peso Promedio</option>
-              <option className={Styles.options} value="min"> Menor Peso</option>
-              <option className={Styles.options} value="max"> Mayor Peso</option>
-            </select>
+          <select className={Styles.select} name="temps" onChange={(event) => handleFilterTemp(event)}>
+            <option className={Styles.options} value="All" key={100}>Temperamentos</option>
+            {allTemps.map((t) => (
+              <option className={Styles.options} key={t.id} value={t.nameTemp}>
+                {t.nameTemp}
+              </option>
+            ))}
+          </select>
+        </div>
 
-            <select className={Styles.select} name="temps" onChange={(event) => handleFilterTemp(event)}>
-              <option className={Styles.options} value="All" key={100}>Temperamentos</option>
-              {allTemps.map((t) => (
-                <option className={Styles.options} key={t.id} value={t.nameTemp}>{t.nameTemp}</option>
-              ))}
-            </select>
+        <div className={Styles.select}>
+          <NavLink className={Styles.link} to="/">Volver a Inicio</NavLink>
+        </div>
+
+        <div className={Styles.navDer}>
+          <div /* className={Styles.select} */>
+            <SearchBar />
           </div>
 
           <div className={Styles.select}>
-              <NavLink className={Styles.link} to="/"  > Volver a  Inicio </NavLink>
-            </div>
-
-          <div className={Styles.navDer}>
-            <div /* className={Styles.select} */>
-              <SearchBar />
-            </div>
-            
-            <div className={Styles.select}>
-              <NavLink className={Styles.link} to="/newDog"> Crear Nueva Raza</NavLink>
-            </div>
-            
-            
-            
-            {/* <button onClick={(e) => handleOnClick(e)}>Cargar toda las Razas</button> */}
-           
+            <NavLink className={Styles.link} to="/newDog">Crear Nueva Raza</NavLink>
           </div>
+
+          {/* <button onClick={(e) => handleOnClick(e)}>Cargar toda las Razas</button> */}
+        </div>
       </nav>
 
-        {/*  <h3>LISTADO DE RAZAS</h3> */}
-        
-        <div >
-          <Paging 
-            dogsPorPag={dogsPorPag}
-            allDogs={razas.length}
-            paginado={paginado}
-          />
-        </div>
-        
-        <div className={Styles.cards}>
-          {currentDogs?.map((el) => {
-            return (
-              <div>
-                <OneDog
-                  id={el.id}
-                  name={el.name}
-                  temperament={el.temperament}
-                  //image={el.image}
-                  image={el.image ? el.image : bd_img}
-                  weight={el.weight}
-                />
-              </div>
-            );
-          })}
-        </div>
+      {/*  <h3>LISTADO DE RAZAS</h3> */}
 
-
-        
+      <div >
+        <Paging
+          dogsPorPag={dogsPorPag}
+          allDogs={razas.length}
+          paginado={paginado}
+        />
+        {/* <h5 className={Styles.nroPag}>Pag {pagActual}</h5> */}
       </div>
-    
+
+      <div className={Styles.cards}>
+        {currentDogs?.map((el) => {
+          return (
+            <div>
+              <OneDog
+                id={el.id}
+                name={el.name}
+                temperament={el.temperament}
+                image={el.image ? el.image : bd_img}
+                weight={el.weight}
+              />
+            </div>
+          );
+        })}
+      </div>
+      
+    </div>
   );
 }

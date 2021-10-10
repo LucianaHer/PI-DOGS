@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getDogDetail } from "../../actions";
 import bd_img from "../../images/perrito3.jpg";
-//import Styles from "./Dog_Detail.module.css";
+import Styles from "./Dog_Detail.module.css";
 
 export default function DogDetail() {
   const { id } = useParams();
@@ -20,7 +20,7 @@ export default function DogDetail() {
 
   
   return (
-    <div>
+    <div className={Styles.divgral}>
       {myDog ? (
         <div>
           <h1>RAZA: {myDog.name}</h1>
