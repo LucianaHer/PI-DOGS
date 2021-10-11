@@ -42,3 +42,7 @@ formul {
         background-image: linear-gradient(#831608, #bb413b);
        
     }
+    .boton:valid, textarea:valid {
+        color: white;
+    }
+    

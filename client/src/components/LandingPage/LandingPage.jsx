@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./LandingPage.module.css";
 import hueso from "../../images/hueso.png";
-import patern from "../../images/patern3.jpg";
+// import patern from "../../images/patern3.jpg";
 
 //ACA DEBERIA CARGAR IMAGEN DE FONDO, ETC//
 export default function LandingPage() {
@@ -14,7 +14,7 @@ export default function LandingPage() {
           <span className={styles.title}>Razas de Perros</span>
         </div>
         <div>
-          <span className={styles.bienvenidos}> Bienvenidos !!</span>
+          <span className={styles.bienvenidos}> Bienvenidos!</span>
         </div>
         {/* <img src={imLP} alt="" /> */}
         <form>

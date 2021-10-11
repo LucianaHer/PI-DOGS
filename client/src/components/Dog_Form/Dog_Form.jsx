@@ -4,6 +4,7 @@ import {Link, useHistory} from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import {postDog, getTemperaments} from "../../actions";
 import Styles from './DogForm.module.css'
+import huesito from "../../images/huesito-1.png"
 
 
 
@@ -38,7 +39,7 @@ import Styles from './DogForm.module.css'
     } 
         
     if(objForm.life_span > 25){
-        errores.life_span="Los perros no pueden vivir tanto (hasta 25 años aceptado) !!!"
+        errores.life_span="Un perro no vive tanto!!(hasta 25 años)"
     }
 
     return errores;
@@ -121,13 +122,14 @@ export default function Dog_Form() {
     }
 
     return (
-      <div>
-        <h1>Creación de una nueva raza!</h1>
-        <form onSubmit={(e) => handleSubmit(e)}>
+      <div className={Styles.divgral}>
+        <img className={Styles.huesito} src={huesito} alt="" />
+        <form className={Styles.form} onSubmit={(e) => handleSubmit(e)}>
+          <h1 className={Styles.titulo}>nueva raza</h1>
           <div>
-            <label>Nombre Raza:</label> 
+            <label className={Styles.label}>Nombre Raza:</label> 
             <input
-              className={Styles}
+              className={Styles.input}
               type="text"
               value={objForm.name}
               name="name"
@@ -140,8 +142,9 @@ export default function Dog_Form() {
           </div>
 
           <div>
-            <label>Peso:</label> 
+            <label className={Styles.label}>Peso:</label> 
             <input
+              className={Styles.input}
               type="text"
               value={objForm.weight}
               name="weight"
@@ -152,13 +155,14 @@ export default function Dog_Form() {
               onChange={(e) => handleInputChange(e)}
             /> 
             {errors.weight && (
-                <p className={Styles.error}> {errors.weight} </p>
+                <span className={Styles.error}> {errors.weight} </span>
             )}         
           </div>
 
           <div>
-            <label>Altura:</label> 
+            <label className={Styles.label}>Altura:</label> 
             <input
+              className={Styles.input}
               type="text"
               value={objForm.height}
               name="height"
@@ -169,13 +173,14 @@ export default function Dog_Form() {
               onChange={(e) => handleInputChange(e)}
             />
             {errors.height && (
-                <p className={Styles.error}> {errors.height} </p>
+                <span className={Styles.error}> {errors.height} </span>
             )}
           </div>
 
           <div>
-            <label>Años de Vida promedio:</label>{" "}
+            <label className={Styles.label}>Años de Vida promedio:</label>{" "}
             <input
+              className={Styles.input}
               type="text"
               value={objForm.life_span}
               name="life_span"
@@ -185,13 +190,15 @@ export default function Dog_Form() {
               onChange={(e) => handleInputChange(e)}
             />
             {errors.life_span && (
-                <p className={Styles.error}> {errors.life_span} </p>
+                <span className={Styles.error}> {errors.life_span} </span>
             )}
           </div>
 
           <div>
-            <label>Crear Temperamento/s:</label>        
+            <label className={Styles.label}>Temperamento/s Nuevo:</label>           
+               
             <input
+              className={Styles.input}
               type="text"
               value={inputTemp1}
               name="temp1"
@@ -201,40 +208,35 @@ export default function Dog_Form() {
               title="Valores permitidos ej: Abc...(hasta 10 caracteres)"         
               onDoubleClick={(e)=>handleSelect(e)}
             />
+            <span className={Styles.coment}>(dobleClick)</span>
             
-            <select name="temps" onChange={(e) => handleSelect(e)}>
-              <option  key={100}>
-                Seleccionar Temparamentos
-              </option>
+            <select className={Styles.select} name="temps" onChange={(e) => handleSelect(e)}>
+              <option  key={100}> Temparamentos</option>
               {allTemps.map((t) => (
                 <option  key={t.id} value={t.nameTemp}>
                   {t.nameTemp}
                 </option>
               ))}
             </select>
-              <br/><label>(dobleclick p/agregar)</label>
-            {/* <ul>
-              <li> {objForm.temperaments.map((el) => el + ", ")} </li>
-            </ul> */}
-            {/* renderiza la lista con los seleccionados */}
+            
+              
+           <div className={Styles.temps}>
             {objForm.temperaments.map(el=> 
-                <div>
-                    <span className={Styles.temps}>{el}</span>
+                <div className={Styles.te} >
+                    <span className={Styles.letraTemp}>{el}</span>
                     <button type='button' className={Styles.tDelete} key={el.id} onClick={()=>handleDelete(el)}> X </button>
                 </div>     
                 )}
+            </div> 
           </div>
 
-          <div>
-            <button key="sub" type="submit"> CREAR! </button>
+          <div className={Styles.containerSubmit}>
+            <input className={Styles.submit} type="reset" value="Crear otra raza" onClick={clearForm}></input>
+            <Link to="/home"><button className={Styles.submit}>Volver</button> </Link>
+            <input className={Styles.submit} type="submit" name="crear" value="CREAR"/>
           </div>
-
           {/* podria haber otro input para una imagen, si en la tabla hay campo imagen, o no aca y ponerla x default cdo se renderiza */}
-          <input type="reset" value="Crear otra raza" onClick={clearForm}></input>
         </form>
-        <Link to="/home">
-          <button>Volver</button>
-        </Link>
       </div>
     );
 };

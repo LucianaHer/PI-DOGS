@@ -104,9 +104,13 @@ background-color: #da4f3c;
     display: flex;
     flex-direction: row;
     float: right;
-}
+}*/
 .nroPag{
-    width:5%;
+    font: bold 30px Arial, Helvetica;
+    color: crimson;
+    text-align:center;
+    margin-left: 46%; 
+    /* width:10%; */
     
 
-} */
+} 

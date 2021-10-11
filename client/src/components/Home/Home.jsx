@@ -82,10 +82,7 @@ export default function Home() {
   }
 
 
-   /* aca irian los filtrados: por raza de la api o agregada xnos / por temperamento
-                    Orden ascendente / descandente de las razas de perro x orden alfabético y por peso
-                    paginado
-                Input para traer razas por nombre */
+   
   return (
     <div className={Styles.divgral}>
       <nav className={Styles.nav}>
@@ -143,7 +140,7 @@ export default function Home() {
           allDogs={razas.length}
           paginado={paginado}
         />
-        {/* <h5 className={Styles.nroPag}>Pag {pagActual}</h5> */}
+        
       </div>
 
       <div className={Styles.cards}>
@@ -161,7 +158,8 @@ export default function Home() {
           );
         })}
       </div>
+        <span className={Styles.nroPag}> ...Pag {pagActual}...</span>
       
     </div>
   );
-}
+} 
