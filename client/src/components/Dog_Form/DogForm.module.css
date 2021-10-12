@@ -36,6 +36,34 @@ textarea:invalid {
     box-shadow: -45px 1px 44px -24px rgba(0,0,0,0.95)
   }
 
+  .fieldset{
+    display: inline;
+    z-index: 3;
+    position: absolute;
+    margin-left: 72%;
+    margin-top: 9%;
+    
+}
+
+.legendField{
+    color:crimson;
+    font: bold 15px Verdana, Arial, Helvetica;
+}
+.radio{
+    margin-left: 0;
+    width: 80px;
+    height: 80px;
+    text-decoration: none;
+    margin-left: -20px;
+}
+.radioButon{
+    /* display: none; */
+    margin-left: 15px;
+    width: 20px;
+height: 20px;
+  
+}
+
   .form{
       position: relative;
         z-index: 1;
@@ -82,6 +110,8 @@ textarea:invalid {
 .coment{
     margin-left: 0;
     margin-top:0;
+    font: italic 15px Arial, Helvetica;
+    color: grey;
 }
 
   .input{
@@ -102,6 +132,23 @@ textarea:invalid {
     border-radius: 8px;
     margin-left: 10px;
     text-decoration: none;
+    background-color: crimson;
+    color: white;
+}
+
+.newTemp{
+    width:30%;
+    font: bold 20px Arial, Helvetica;
+	font-weight:bold;
+	/* display:inline-block;
+    text-align: right; */
+    margin-left:80px;
+}
+
+.option{
+    background-color: white;
+    color: crimson;
+    
 }
 
 .temps {
@@ -131,14 +178,16 @@ textarea:invalid {
 } 
   
 .containerSubmit{
+    width: 70%;
     display: flex;
     justify-content: space-between;
+    margin-left: 7%;
 }
 .submit{
     text-decoration: none;
-	width:170   px;
+	width:170px;
 	padding:8px 16px;
-	margin-top:50px;
+	margin-top:90px;
 	border-radius:5px;
    
 
@@ -169,4 +218,5 @@ textarea:invalid {
     
     position: relative;
 }
+
 

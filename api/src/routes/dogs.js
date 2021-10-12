@@ -15,7 +15,7 @@ const {
 
 ///// RUTA (POST)  /DOGS  
 router.post('/', async (req,res) =>{
-    var {name, height, weight, life_span, temperaments}= req.body; //!! temperaments es un array
+    var {name, height, weight, life_span, temperaments, image}= req.body; //!! temperaments es un array
     
     if (!name || !height || !weight){ //campos allowNull: false
         return res.send('faltan datos ')
@@ -29,7 +29,8 @@ router.post('/', async (req,res) =>{
             defaults:{
                 height: height,
                 weight: weight,
-                life_span: life_span      
+                life_span: life_span, 
+                image: image     
             }   
         });
         if ( created===true && temperaments!==undefined){ //se crean los temperaments pasados x body
@@ -58,9 +59,9 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
                 id:el.id,//esto es para control de Postman, poder tomar la id
                 name: el.name,
                 temperament: tp.join(', '), // muestra el array como string 
-                //image: "No existe imágen",
                 createInDb: el.createInDb,
-                weight: el.weight
+                weight: el.weight,
+                image: el.image
             }
         }else{//es de la Api
             //let tpApi= el.temperament.split(',');//convierte el string temperament en un array

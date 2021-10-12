@@ -61,18 +61,7 @@ const getOneByIdAPI = async function(idRaza){  // funcion que busca una raza x i
 
     for(var i=0; i< allDogs.length; i++){
         if (allDogs[i].id === Number(idRaza)){ //opcional setear aca lo q devuelvo
-            // let dog={
-            //     id: allDogs[i].id,
-            //     name: allDogs[i].name,
-            //     temperament: allDogs[i].temperament,
-            //     image: allDogs[i].image,
-            //     altura: allDogs[i].altura,
-            //     peso: allDogs[i].peso,
-            //     vida: allDogs[i].vida
-
-                
-            // }
-            // return dog;
+            
             return allDogs[i]
         }
     }        
@@ -91,11 +80,11 @@ const getOneByIdBD = async function(idRaza){// Para encontrar un dog en la BD x 
             
             var dogDetail= {  //seteo un objeto ppara devolver los datos listos
                 name: oneDogBD.name,
-                //image: "No existe imágen",
                 height: oneDogBD.height,
                 weight: oneDogBD.weight,
                 life_span: oneDogBD.life_span,
-                temperament: tp.join(', ')//al array tp , lo muestra como string
+                temperament: tp.join(', '),//al array tp , lo muestra como string
+                image: oneDogBD.image
             } 
             
             return dogDetail;  

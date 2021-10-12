@@ -20,6 +20,7 @@ export default function OneDog({ id, name, temperament, image, weight }) {
       </Link>
 
       <h4 className={Styles.text}> Peso: {weight} Kgs</h4>
+      {/* <h5 className={Styles.click}>click en foto</h5> */}
     </div>
   );
 }

@@ -13,7 +13,7 @@ import OneDog from "../OneDog/OneDog.jsx";
 import Paging from "../Paging/Paging.jsx";
 import SearchBar from "../SearchBar/SearchBar.jsx";
 import Styles from "./Home.module.css";
-import bd_img from "../../images/perrito3.jpg";
+import bd_img from "../../images/the-mask.jpg";
 
 //ACA PUEDO HACER UN NAV para las opciones de volver a mostrar las razas,
 
@@ -85,8 +85,10 @@ export default function Home() {
    
   return (
     <div className={Styles.divgral}>
+      
       <nav className={Styles.nav}>
         <div className={Styles.navIzq}>
+
           <select className={Styles.select} name="created"  onChange={(e) => handleFilterCreated(e)}>
             <option className={Styles.options} value="All" key="3">Todas las razas</option>
             <option className={Styles.options} value="razaApi" key="4">Razas Existentes</option>
@@ -95,7 +97,7 @@ export default function Home() {
 
           <select className={Styles.select} name="abcOrden" onChange={(ev) => handleABC(ev)}>
             <option className={Styles.options} value="all" key="0">Orden x Nombre Raza</option>
-            <option className={Styles.options} value="asc" key="1">Ascendente</option>
+            <option className={Styles.options} value="asc" key="1">Ascendente A-Z</option>
             <option className={Styles.options} value="desc" key="2">Descendente Z-A</option>
           </select>
 
@@ -120,7 +122,7 @@ export default function Home() {
         </div>
 
         <div className={Styles.navDer}>
-          <div /* className={Styles.select} */>
+          <div>
             <SearchBar />
           </div>
 
@@ -132,8 +134,8 @@ export default function Home() {
         </div>
       </nav>
 
-      {/*  <h3>LISTADO DE RAZAS</h3> */}
-
+      
+      {/* paginado */}
       <div >
         <Paging
           dogsPorPag={dogsPorPag}
@@ -143,6 +145,7 @@ export default function Home() {
         
       </div>
 
+    {/*  <h3>LISTADO DE RAZAS, tomando el paginado</h3> */}
       <div className={Styles.cards}>
         {currentDogs?.map((el) => {
           return (
@@ -151,14 +154,15 @@ export default function Home() {
                 id={el.id}
                 name={el.name}
                 temperament={el.temperament}
-                image={el.image ? el.image : bd_img}
+                image={el.image ? el.image : "imagen no encontrada"}
                 weight={el.weight}
               />
             </div>
           );
         })}
       </div>
-        <span className={Styles.nroPag}> ...Pag {pagActual}...</span>
+      
+      <span className={Styles.nroPag}> Pag. {pagActual}</span>
       
     </div>
   );

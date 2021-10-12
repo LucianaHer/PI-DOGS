@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getDogDetail } from "../../actions";
-import bd_img from "../../images/perrito3.jpg";
+import bd_img from "../../images/the-mask.jpg";
 import Styles from "./Dog_Detail.module.css";
 
 export default function DogDetail() {
@@ -32,9 +32,7 @@ export default function DogDetail() {
                 src={myDog.image}
                 alt="imagen API no encontrada"
               ></img>
-            ) : (
-              <img className={Styles.imagen} src={bd_img} alt="imagen BD encontrada"></img>
-            )}           
+            ) : <h3>"no encontrada"</h3>}           
           </div>
 
           <div id="2°columna">

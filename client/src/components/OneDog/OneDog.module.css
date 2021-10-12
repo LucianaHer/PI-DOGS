@@ -5,7 +5,7 @@
     background-color: lightgrey;
     font: bold 14px Arial, Helvetica;
     font-size: 15px;
-    border: 1px solid #b42b19;
+    border: 3px solid #b42b19;
     border-radius: 10%;
 
     /* box-shadow: 5px 5px 20px white; */
@@ -23,7 +23,7 @@ box-shadow: 16px 27px 38px -3px rgba(13,1,1,1);
     display: block;
     margin:auto; 
     border-radius: 10%;
-    border: 1px solid rgb(20, 133, 10);
+    border: 2px solid rgb(20, 133, 10);
     object-fit: cover;
 
 }
@@ -44,4 +44,9 @@ box-shadow: 16px 27px 38px -3px rgba(13,1,1,1);
     margin: 1%;
     font:  bold 15px Arial, Helvetica;
     text-align:center;
+}
+
+.click{
+    text-align:center;
+    font: italic 15px  Helvetica,Arial;
 }
