@@ -81,7 +81,7 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
             res.status(200).json(dogNames);  //es un arary de las coincidencias
         }
         else {
-            res.status(404).send('No existe ninguna raza que incluya ese nombre')
+            res.status(200).send(["error"])
         }    
     } else{  //si no hay query
         res.status(200).json(dataPpal);

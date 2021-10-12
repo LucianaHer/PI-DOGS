@@ -29,6 +29,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         dogs: action.payload
       }
+     
 
     case "POST-DOG":
       return {

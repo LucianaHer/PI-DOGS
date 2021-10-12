@@ -50,3 +50,11 @@ box-shadow: 16px 27px 38px -3px rgba(13,1,1,1);
     text-align:center;
     font: italic 15px  Helvetica,Arial;
 }
+
+.error{
+    font:  bold 40px Arial, Helvetica;
+    color: black;
+    border: 5px solid yellow;
+    
+    text-align: center;
+}

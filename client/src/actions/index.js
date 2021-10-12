@@ -36,13 +36,15 @@ export function searchByName(name) {
   return async function (dispatch) {
     try {
       var json = await axios.get("http://localhost:3001/dogs?name=" + name);
-
-      return dispatch({
-        type: "GET-NAME-DOGS",
-        payload: json.data,
-      });
+      
+        return dispatch({
+          type: "GET-NAME-DOGS",
+          payload: json.data,
+        });
+    
     } catch (error) {
       console.log("No se pudo obtener la query", error);
+
     }
   };
 }
