@@ -1,10 +1,11 @@
 import axios from "axios";
 
-export function getDogs() {
+
+//CONECTA CON EL BACK (get /dogs)
+export function getDogs() { //trae todos los dogs desde mi Api
   return async function (dispatch) {
-    //ACA SE CONECTA CON EL BACK (get /dogs)
     try {
-      var json = await axios.get("http://localhost:3001/dogs");
+      var json = await axios.get("http://localhost:3001/dogs"); 
 
       return dispatch({
         type: "GET-DOGS",
@@ -17,7 +18,7 @@ export function getDogs() {
 }
 
 //CONECTA CON EL BAK (get/temperaments)
-export function getTemperaments() {
+export function getTemperaments() { //trae los temps de mi Api
   return async function (dispatch) {
     try {
       var json = await axios.get("http://localhost:3001/temperament");
@@ -31,7 +32,7 @@ export function getTemperaments() {
   };
 }
 
-//CONECTA CON EL BACK (get /dogs?name=)
+//CONECTA CON EL BACK (get /dogs?name=) x query - trae las coincidencias x nombre raza
 export function searchByName(name) {
   return async function (dispatch) {
     try {
@@ -49,19 +50,20 @@ export function searchByName(name) {
   };
 }
 
-// CONECTA CON EL BACK (post /dogs)
+// CONECTA CON EL BACK (post /dogs) // agrega una nueva raza
 export function postDog(payload){ // el payload me llega del form, es el obj a crear en la tabla
+  
   return async function (dispatch) {
-    console.log("Payload de postDog: ",payload)
-    
+      
       var json = await axios.post("http://localhost:3001/dogs", payload); //le paso x BODY el obj creado en el form
-      console.log("REGISTRO CREADO: ",json)
+      // console.log("REGISTRO CREADO: ",json)
       return json;
 
   };
 
 }
 
+//CONECTA CON EL BACK - busca un dog por id (x params)
 export function getDogDetail(id){
   return async function (dispatch) {
     try {
@@ -77,6 +79,7 @@ export function getDogDetail(id){
   };
 }
 
+
 export function filterByTemperament(payload) {
   // el payload es el value del select=> un temp de la lista
   console.log(payload);
@@ -86,6 +89,7 @@ export function filterByTemperament(payload) {
   };
 }
 
+
 export function filterByCreated(payload) {
   // payload es el value del select
   return {
@@ -93,6 +97,7 @@ export function filterByCreated(payload) {
     payload,
   };
 }
+
 
 export function orderByName(payload) {
   // payload es el value de este select(asc/desc)
@@ -102,7 +107,9 @@ export function orderByName(payload) {
   };
 }
 
+
 export function orderByWeight(payload) {
+  //payload es el value de este select
   return {
     type: "ORDER-BY-WEIGHT",
     payload,

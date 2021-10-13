@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./LandingPage.module.css";
 import hueso from "../../images/hueso.png";
-// import patern from "../../images/patern3.jpg";
 
-//ACA DEBERIA CARGAR IMAGEN DE FONDO, ETC//
+
+
 export default function LandingPage() {
   return (
     <div className={styles.lp}>

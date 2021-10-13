@@ -4,17 +4,18 @@ import { useDispatch } from "react-redux";
 import { searchByName } from "../../actions";
 import Styles from "./SearchBar.module.css";
 
-export default function SearchBar() {
-  const dispatch = useDispatch();
-  const [name, setName] = useState("");
+export default function SearchBar() { //busqueda de raza x name (es un includes en el back)
 
-  function handleInputChange(e) {
+  const dispatch = useDispatch();
+  const [name, setName] = useState(""); //est local para q valla renderizando  el input (name)
+
+  function handleInputChange(e) {//cdo hay un cambio en el input, lo va renderizando
     e.preventDefault();
     console.log(name);
     setName(e.target.value);
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e) {// cdo se presiona Buscar, se despacha la accion p/ buscar en la api x name
     e.preventDefault();
     dispatch(searchByName(name));
     setName("");
@@ -23,7 +24,7 @@ export default function SearchBar() {
   return (
     <form className={Styles.formul}  onSubmit={(e) => handleSubmit(e)}>
       <input
-      className={Styles.input}
+        className={Styles.input}
         type="text"
         placeholder=" Ingrese raza..."
         value={name}

@@ -47,7 +47,7 @@ router.post('/', async (req,res) =>{
 
 ///  RUTA (GET)  /DOGS   y query ?=name:
 router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
-    const {name}= req.query;   // nombre de la raza por query!!!
+    const {name}= req.query;   //raza por query!!!
        
     const allData= await getAllData();   //fc q devuelve la info de la Api y de la BD concatenada en un array de {}
 
@@ -56,7 +56,7 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
         if(el.hasOwnProperty('createInDb')){  //si es de la BD
             let tp= el.Temperaments.map( t => t.nameTemp); //convierte los Temps asociados en un array
             return {
-                id:el.id,//esto es para control de Postman, poder tomar la id
+                id:el.id,//para poder tomar la id
                 name: el.name,
                 temperament: tp.join(', '), // muestra el array como string 
                 createInDb: el.createInDb,
@@ -64,11 +64,11 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
                 image: el.image
             }
         }else{//es de la Api
-            //let tpApi= el.temperament.split(',');//convierte el string temperament en un array
+            
             return {    
                 id: el.id,
                 name: el.name,
-                temperament: el.temperament, ///modifique desde .split!!! 
+                temperament: el.temperament, 
                 image: el.image,
                 weight: el.weight                
             }
@@ -91,7 +91,7 @@ router.get('/', async (req,res) =>{  //   RUTA /dogs ( total y x query name)
 
 //RUTA (GET) /DOGS params idRaza
 router.get('/:idRaza', async (req,res)=> {  // ruta para encontrar una raza en particular (el front me manda la id), 
-                                            //pero en la Api se puede buscar x nombre(no voy a usar esa busqueda)
+                                            
     var {idRaza}=req.params;
      
     try {
@@ -115,11 +115,6 @@ router.get('/:idRaza', async (req,res)=> {  // ruta para encontrar una raza en p
         res.status(404).send('No se pudo acceder a los datos')
     }
 })
-
-
-
-
-
 
 
 

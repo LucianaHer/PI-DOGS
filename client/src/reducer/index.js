@@ -24,7 +24,6 @@ function rootReducer(state = initialState, action) {
 
 
     case "GET-NAME-DOGS":
-      console.log("CONTROL DE QUERY: ",action.payload)
       return {
         ...state,
         dogs: action.payload
@@ -45,6 +44,7 @@ function rootReducer(state = initialState, action) {
     case "FILTER-BY-TEMP":
       var dogsF = state.allDogs; // siempre me traigo todos los dogs del estado inmutable
       var tempFilter = [];
+
       if (action.payload === "All") {
         tempFilter = dogsF;
       } else {
@@ -62,19 +62,22 @@ function rootReducer(state = initialState, action) {
         dogs: tempFilter, //guardo los dogs filtrados en el estado filtrado, no toco allDogs
       };
 
+
     case "FILTER-BY-CREATED":
       const dogsC = state.allDogs;
       var createdFilter = [];
 
-      if (action.payload === "All") {
+      if (action.payload === "All") { //todos
         createdFilter = dogsC;
-      } else if (action.payload === "razaBD") {
+
+      } else if (action.payload === "razaBD") { //bd
         dogsC.forEach((el) => {
           if (el.hasOwnProperty("createInDb")) {
             createdFilter.push(el);
           }
         });
-      } else {
+
+      } else {                                //Api
         dogsC.forEach((el) => {
           if (!el.hasOwnProperty("createInDb")) {
             createdFilter.push(el);
@@ -86,12 +89,14 @@ function rootReducer(state = initialState, action) {
         dogs: createdFilter,
       };
 
+
     case "ORDER-BY-NAME":
       const dogsOr = [...state.dogs];
 
-      var ordedDogs =
+      // var ordedDogs =
         action.payload === "asc"
           ? dogsOr.sort(function (a, b) {
+            //asc
               if (a.name > b.name) {
                 return 1;
               }
@@ -112,8 +117,9 @@ function rootReducer(state = initialState, action) {
             });
       return {
         ...state,
-        dogs: ordedDogs,
+        dogs: dogsOr,
       };
+
 
     case "ORDER-BY-WEIGHT":
       var dogsW = [...state.dogs];
@@ -124,7 +130,7 @@ function rootReducer(state = initialState, action) {
         if (peso[1] && peso[0] && peso[1].trim() === "NaN") peso[1] = peso[0];
 
         if (dogsW[i].weight === "NaN") {
-          //p/setar el pmnin
+          //p/setar el pmnin y q me ponga el NaN al final
           dogsW[i].pmin = 100;
         } else {
           dogsW[i].pmin = parseInt(peso[0].trim());
@@ -154,6 +160,7 @@ function rootReducer(state = initialState, action) {
         dogs: dogsW,
       };
 
+      
     default:
       return state;
   }

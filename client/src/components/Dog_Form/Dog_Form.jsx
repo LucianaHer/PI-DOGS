@@ -21,13 +21,13 @@ export default function Dog_Form() {
 
 
   const dispatch = useDispatch();
-  const history = useHistory(); //para redirigir a alguna ruta
-  const allTemps = useSelector((state) => state.temps);
+  // const history = useHistory(); //para redirigir a alguna ruta
+  const allTemps = useSelector((state) => state.temps); //traigo los temps
   var inputTemp1;
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({}); //est local para errores
 
-  const [objForm, setObjForm] = useState({
+  const [objForm, setObjForm] = useState({ //est local de 1 dog(es lo q se va a enviar)
     name: "",
     height: "",
     weight: "",
@@ -37,25 +37,20 @@ export default function Dog_Form() {
   });
 
   useEffect(() => {
-    //para llenar el estado temperaments disparando la action getTemperaments
+    //para llenar el estado temperaments disparando la action 
     dispatch(getTemperaments());
   }, [dispatch]);
 
-  function handleInputChange(e) {
+
+  function handleInputChange(e) {//cdo se cambia algun campo ()
     e.preventDefault();
-    if (e.target.name === "image") {
-      //probando imagen
-      setObjForm({
-        ...objForm,
-        image: e.target.value,
-      });
-    } else {
-      setObjForm({
-        ...objForm,
-        [e.target.name]: e.target.value,
-      });
-    }
-    setErrors(
+
+    setObjForm({
+       ...objForm,
+       [e.target.name]: e.target.value,
+    });
+   
+    setErrors(  // ejecuta la fc validate sobre los value
       validate({
         ...objForm,
         [e.target.name]: e.target.value,
@@ -63,7 +58,8 @@ export default function Dog_Form() {
     );
   }
 
-  function handleSelect(e) {
+
+  function handleSelect(e) { // cada vez q  se agrega un temp
     e.preventDefault();
 
     setObjForm({
@@ -72,14 +68,14 @@ export default function Dog_Form() {
     });
   }
 
-  function handleDelete(el) {
+  function handleDelete(el) { // para borrar un temp ya agregado
     setObjForm({
       ...objForm,
       temperaments: objForm.temperaments.filter((t) => t !== el),
     });
   }
 
-  function clearForm() {
+  function clearForm() { // limpia el Form y los errores, cdo se quiere crear otra raza
     setObjForm({
       name: "",
       height: "",
@@ -92,13 +88,14 @@ export default function Dog_Form() {
     setErrors({});
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e) { // cdo se envia el form con CREAR
     e.preventDefault();
-    dispatch(postDog(objForm));
+    dispatch(postDog(objForm));//se despacha la acción
     alert("Raza creada con éxito!!");
 
     //history.push('/home');// me redirige al Home
   }
+
 
   return (
     <div className={Styles.divgral}>
@@ -263,7 +260,7 @@ export default function Dog_Form() {
   );
 }
 
-//validaciones
+//validaciones para input wieight, height y life_span
 function validate(objForm) {
   var errores = {};
   var arrW = objForm.weight.split("-");

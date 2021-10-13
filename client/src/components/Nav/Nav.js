@@ -1,11 +1,14 @@
-import React from 'react'
 
-export default function Nav() {
-    return (
-        <div>
+//NO MODULARIZADO
+
+// import React from 'react'
+
+// export default function Nav() {
+//     return (
+//         <div>
             
-        </div>
-    )
-}
+//         </div>
+//     )
+// }
 
 

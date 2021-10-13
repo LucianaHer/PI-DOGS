@@ -8,14 +8,14 @@ import Dog_Detail from "./components/Dog_Detail/Dog_Detail.jsx"
 function App() {
   return (
     <BrowserRouter>
-      {/* <div > */}
+      
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route path="/home" component={Home} />
           <Route path="/newDog" component={Dog_Form} />
           <Route path="/dogDetail/:id" component={Dog_Detail} />
         </Switch>
-     {/*  </div> */}
+     
     </BrowserRouter>
   );
 }

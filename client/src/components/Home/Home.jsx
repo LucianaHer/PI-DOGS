@@ -1,38 +1,32 @@
 import { Link, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getDogs,
-  getTemperaments,
-  filterByTemperament,
-  filterByCreated,
-  orderByName,
-  orderByWeight,
-} from "../../actions";
+
+import {getDogs, getTemperaments, filterByTemperament, filterByCreated, orderByName, orderByWeight, } from "../../actions";
+
 import OneDog from "../OneDog/OneDog.jsx";
 import Paging from "../Paging/Paging.jsx";
 import SearchBar from "../SearchBar/SearchBar.jsx";
 import Styles from "./Home.module.css";
-import bd_img from "../../images/the-mask.jpg";
 
-//ACA PUEDO HACER UN NAV para las opciones de volver a mostrar las razas,
+
+
 
 export default function Home() {
-  const dispatch = useDispatch();
-  //metraigo los Dogs del estado
-  var razas = useSelector((state) => state.dogs);
-  console.log("ESTADO: ", razas[4]);
 
-  //me traigo los temperamentos del Estado
-  const allTemps = useSelector((state) => state.temps);
+  const dispatch = useDispatch();
+  
+  var razas = useSelector((state) => state.dogs);//me traigo los Dogs del estado
+  
+  const allTemps = useSelector((state) => state.temps); //me traigo los temperamentos del Estado
 
   //paginado
   const [pagActual, setPagActual] = useState(1);
-  const [dogsPorPag, setDogsPorPag] = useState(8);
+  const dogsPorPag = 8;
   const indUltimoDog = pagActual * dogsPorPag;
   const indPrimerDog = indUltimoDog - dogsPorPag;
   const currentDogs = razas.slice(indPrimerDog, indUltimoDog);
-  console.log("Dogs por pagina: ", currentDogs);
+  //console.log("Dogs por pagina: ", currentDogs);
 
   const paginado = (nroPag) => {
     setPagActual(nroPag);
@@ -50,11 +44,6 @@ export default function Home() {
     dispatch(getTemperaments());
   }, [dispatch]);
 
-  //ejecuto esto al presionar 'Cargar todas las razas'
-  function handleOnClick(e) {
-    e.preventDefault();
-    dispatch(getDogs());
-  }
 
   //funcion para tomar el select de temperamentos y despachar la accion de filtrar temp, para renderizar los dogs fitrados
   function handleFilterTemp(event) {
@@ -62,7 +51,7 @@ export default function Home() {
     setPagActual(1);
   }
 
-  //funcion para tomar el select de Razas Creadas / Existentes y despachar la accion filterByCreated
+  //funcion para tomar el select de Razas Todas / Creadas / Existentes y despachar la accion filterByCreated
   function handleFilterCreated(e) {
     dispatch(filterByCreated(e.target.value));
     setPagActual(1);
@@ -75,6 +64,7 @@ export default function Home() {
     setPagActual(1);
   }
 
+  //funcion para ordenar las razas x > o < peso, se despacha orderByWeight
   function handleWeight(e) {
     e.preventDefault();
     dispatch(orderByWeight(e.target.value));
@@ -86,6 +76,7 @@ export default function Home() {
   return (
     <div className={Styles.divgral}>
       
+      {/* el Nav */}
       <nav className={Styles.nav}>
         <div className={Styles.navIzq}>
 
@@ -96,7 +87,7 @@ export default function Home() {
           </select>
 
           <select className={Styles.select} name="abcOrden" onChange={(ev) => handleABC(ev)}>
-            <option className={Styles.options} value="all" key="0">Orden x Nombre Raza</option>
+            <option className={Styles.options} value="all" key="0">Orden Alfabético</option>
             <option className={Styles.options} value="asc" key="1">Ascendente A-Z</option>
             <option className={Styles.options} value="desc" key="2">Descendente Z-A</option>
           </select>
@@ -108,7 +99,7 @@ export default function Home() {
           </select>
 
           <select className={Styles.select} name="temps" onChange={(event) => handleFilterTemp(event)}>
-            <option className={Styles.options} value="All" key={100}>Temperamentos</option>
+            <option className={Styles.options} value="All" key={100}>Filtro x Temperamento</option>
             {allTemps.map((t) => (
               <option className={Styles.options} key={t.id} value={t.nameTemp}>
                 {t.nameTemp}
@@ -135,7 +126,7 @@ export default function Home() {
       </nav>
 
       
-      {/* paginado */}
+      {/* paginado, le paso props*/}
       <div >
         <Paging
           dogsPorPag={dogsPorPag}
@@ -145,7 +136,7 @@ export default function Home() {
         
       </div>
 
-    {/*  <h3>LISTADO DE RAZAS, tomando el paginado</h3> */}
+    {/*  LISTADO DE RAZAS - Cards(paginadas) - x cada card renderiza <OneDog/> */}
       <div className={Styles.cards}>
         {currentDogs?.map((el) => {
           return (

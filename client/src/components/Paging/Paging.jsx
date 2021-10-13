@@ -12,13 +12,12 @@ export default function Paging({ dogsPorPag, allDogs, paginado,  }) {
   return (
     <div >
        <ul className={Styles.ul}> 
-        {pageNumbers && 
-        pageNumbers.map(number => (  //mapea cada numerito de la cant de pag( c/nrito=> pag de 8 cards)
-           <li  className={Styles.li} key={number}> 
-             <a classNAme={Styles.a}  onClick={() => paginado(number)}> {number} </a>
-             
-           </li> 
-        ))}
+          {pageNumbers && 
+          pageNumbers.map(number => (  //mapea cada numerito de la cant de pag( c/nrito=> pag de 8 cards)
+            <li  className={Styles.li} key={number}> 
+              <a classNAme={Styles.a}  onClick={() => paginado(number)}> {number} </a>         
+            </li> 
+          ))}
         
        </ul> 
        

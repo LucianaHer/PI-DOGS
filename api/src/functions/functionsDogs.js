@@ -34,8 +34,7 @@ const getDBInfo = async () => {     // fc para obtener todos las razas de la B D
     try {      
         const dogsDB =  await Dog.findAll({
             include: Temperament
-        });
-        
+        });   
         const dbDatos=dogsDB.map(d => d.dataValues);//(obtener solo el DataValue de cada obj de dogsDB)
         return dbDatos;    
     } catch (e) {
@@ -43,7 +42,7 @@ const getDBInfo = async () => {     // fc para obtener todos las razas de la B D
     }
 }
 
-const getAllData = async () => {
+const getAllData = async () => { //concatena lo de la api + lo de la BD
     try {
         const apiInfo= await getInfoAPI();
         const dbInfo= await getDBInfo();
@@ -57,11 +56,8 @@ const getAllData = async () => {
 const getOneByIdAPI = async function(idRaza){  // funcion que busca una raza x id en la Api
 
     var allDogs= await getInfoAPI();
-
-
     for(var i=0; i< allDogs.length; i++){
-        if (allDogs[i].id === Number(idRaza)){ //opcional setear aca lo q devuelvo
-            
+        if (allDogs[i].id === Number(idRaza)){      
             return allDogs[i]
         }
     }        
@@ -69,13 +65,11 @@ const getOneByIdAPI = async function(idRaza){  // funcion que busca una raza x i
 
 
 const getOneByIdBD = async function(idRaza){// Para encontrar un dog en la BD x id UUIV
-
     try {
         var oneDogBD= await Dog.findByPk(idRaza, {
             include: Temperament
         }); 
-        if(oneDogBD){
-    
+        if(oneDogBD){  
             var tp= oneDogBD.Temperaments.map( t => t.dataValues.nameTemp);//guerda los temps asociados en un array(tp)
             
             var dogDetail= {  //seteo un objeto ppara devolver los datos listos
@@ -97,7 +91,7 @@ const getOneByIdBD = async function(idRaza){// Para encontrar un dog en la BD x 
 
 
 const addTemperaments = async function(t,d){// agrega los temperamentos pasados en el array, al crear un dog
-//async function addTemperaments(t, d){    // agrega los temperamentos pasados en el array, al crear un dog
+
     t=capitalizar(t);
     var [temp, creado]= await Temperament.findOrCreate({
         where: {nameTemp: t}
@@ -108,7 +102,6 @@ const addTemperaments = async function(t,d){// agrega los temperamentos pasados 
 }
 
 const capitalizar = function(str){    // capitaliza un string
-//function capitalizar(str) {
         return str.replace(/\w\S*/g, function(txt){
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         });
